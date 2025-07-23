@@ -3,8 +3,8 @@ import type { Site, SocialObjects } from "./types";
 export const SITE: Site = {
   website: "https://caterpillar-soft.com", // replace this with your deployed domain
   author: "caterpi11ar",
-  desc: "A minimal, responsive and SEO-friendly Astro blog theme.",
-  title: "mmc's blog",
+  desc: "caterpillar's blog",
+  title: "caterpillar's blog",
   ogImage: "astropaper-og.jpg",
   lightAndDarkMode: true,
   postPerPage: 10,

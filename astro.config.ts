@@ -14,9 +14,7 @@ export default defineConfig({
   site: SITE.website,
   integrations: [
     mdx(),
-    tailwind({
-      applyBaseStyles: false,
-    }),
+    tailwind({ applyBaseStyles: false }),
     react(),
     sitemap(),
   ],

@@ -41,12 +41,16 @@
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "rehype-mathjax": "^6.0.0",
-    "remark-math": "^6.0.0"
+    "remark-math": "^6.0.0",
+    "simple-git-hooks": "^2.13.0"
   },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm i --frozen-lockfile --ignore-scripts --offline && pnpm typecheck && npx lint-staged"
   },
   "lint-staged": {
     "*": "eslint --ext .ts,.tsx --fix  --cache ."

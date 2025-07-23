@@ -16,7 +16,6 @@
 - 🏷️ **标签系统**: 使用标签组织文章
 - 📡 **RSS 订阅**: 博客更新订阅
 - 🎨 **Tailwind CSS**: 使用工具类进行现代样式设计
-- ⚡ **性能优化**: 使用 Jampack 进行生产环境优化
 
 ## 🛠️ 技术栈
 
@@ -26,7 +25,6 @@
 - **内容**: MDX 和 Markdown
 - **数学渲染**: MathJax
 - **搜索**: [Fuse.js](https://fusejs.io) 6.6.2
-- **构建优化**: [Jampack](https://jampack.divriots.com)
 - **TypeScript**: 完整的 TypeScript 支持
 
 ## 🚀 快速开始
@@ -133,7 +131,6 @@ pnpm build
 
 构建过程包括：
 - Astro 构建优化
-- Jampack 压缩以获得更好的性能
 - 静态站点生成
 
 ### 部署选项

@@ -8,7 +8,9 @@
     "preview": "astro preview",
     "sync": "astro sync",
     "astro": "astro",
-    "cz": "cz"
+    "cz": "cz",
+    "typecheck": "tsc --noEmit",
+    "lint:fix": "eslint --ext .astro,.ts,.tsx --fix  --cache ."
   },
   "dependencies": {
     "@astrojs/check": "^0.2.0",
@@ -52,6 +54,6 @@
     "pre-commit": "pnpm i --frozen-lockfile --ignore-scripts --offline && pnpm typecheck && npx lint-staged"
   },
   "lint-staged": {
-    "*": "eslint --ext .ts,.tsx --fix  --cache ."
+    "*": "eslint --ext .astro,.ts,.tsx --fix  --cache ."
   }
 }

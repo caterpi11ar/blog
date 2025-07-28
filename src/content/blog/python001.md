@@ -1,5 +1,5 @@
 ---
-title: Python3 核心语法速查
+title: Python 学习小记
 author: caterpillar
 pubDatetime: 2025-07-24T00:00:00
 featured: false
@@ -9,12 +9,10 @@ tags:
   - 编程语言
   - 学习笔记
   - 基础语法
-description: 一份 Python3 学习笔记，从基础语法开始，涵盖数据类型、控制流、函数、面向对象编程等核心概念
+description: 一份 Python 学习笔记，从基础语法开始，涵盖数据类型、控制流、函数、面向对象编程等核心概念
 ---
 
-# Python3 核心语法速查
-
-Python 是一种高级编程语言，以其简洁的语法和强大的功能而闻名。本文档为有编程经验的开发者提供 Python3 的核心语法参考。
+# Python 语法速查
 
 ## 目录
 

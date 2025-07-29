@@ -34,7 +34,7 @@ description: 一份 Python 学习笔记，从基础语法开始，涵盖数据�
 # 数字
 int_num = 42
 float_num = 3.14
-complex_num = 3 + 4j
+complex_num = 3 + 4
 bool_val = True
 
 # 字符串
@@ -195,15 +195,43 @@ lst.reverse()        # 反转
 
 ```python
 # 字典推导式
-squares_dict = {x: x**2 for x in range(5)}
+squares_dict1 = {x: x**2 for x in range(5)}
+
 
 # 常用方法
+dict2 = dict()
+dict3 = dict({ "A": "23" })
 d = {"a": 1, "b": 2}
 d.update({"c": 3})   # 更新字典
 d.get("d", 0)        # 安全获取，默认值0
+
 d.setdefault("e", 5) # 设置默认值
 d.pop("a")           # 删除并返回
 d.clear()            # 清空字典
+
+person = {'name': 'Alice', 'age': 25}
+
+# 通过键访问
+print(person['name'])  # 输出: Alice
+d["nam123123e"] # KeyError: 'nam123123e'
+
+# 使用get方法(避免KeyError)
+print(person.get('age'))  # 输出: 25
+print(person.get('nam123123e'))  # 返回 None
+print(person.get('nam123123e', '默认值'))  # 返回 '默认值'
+
+# 使用 in 检查键是否存在
+
+if 'nam123123e' in person:
+    print(person['nam123123e'])
+else:
+    print("键不存在")
+
+# 使用 try-except 捕获异常
+try:
+    print(person['nam123123e'])
+except KeyError:
+    print("键不存在")
 ```
 
 ### 集合操作

@@ -1,28 +1,23 @@
 import { SITE } from "@config";
+import type { FC } from "react";
 
-export default () => {
+const Site: FC = () => {
   return (
     <div
+      className="w-full h-full flex items-center justify-center"
       style={{
         background: "#fefbfb",
-        width: "100%",
-        height: "100%",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
       }}
     >
       <div
+        className="absolute flex justify-center"
         style={{
-          position: "absolute",
           top: "-1px",
           right: "-1px",
           border: "4px solid #000",
           background: "#ecebeb",
           opacity: "0.9",
           borderRadius: "4px",
-          display: "flex",
-          justifyContent: "center",
           margin: "2.5rem",
           width: "88%",
           height: "80%",
@@ -30,37 +25,29 @@ export default () => {
       />
 
       <div
+        className="flex justify-center"
         style={{
           border: "4px solid #000",
           background: "#fefbfb",
           borderRadius: "4px",
-          display: "flex",
-          justifyContent: "center",
           margin: "2rem",
           width: "88%",
           height: "80%",
         }}
       >
         <div
+          className="flex flex-col justify-between"
           style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-between",
             margin: "20px",
             width: "90%",
             height: "90%",
           }}
         >
           <div
+            className="flex flex-col justify-between items-center overflow-hidden text-center"
             style={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
               height: "90%",
               maxHeight: "90%",
-              overflow: "hidden",
-              textAlign: "center",
             }}
           >
             <p style={{ fontSize: 72, fontWeight: "bold" }}>{SITE.title}</p>
@@ -68,15 +55,12 @@ export default () => {
           </div>
 
           <div
+            className="flex justify-end w-full mb-2"
             style={{
-              display: "flex",
-              justifyContent: "flex-end",
-              width: "100%",
-              marginBottom: "8px",
               fontSize: 28,
             }}
           >
-            <span style={{ overflow: "hidden", fontWeight: "bold" }}>
+            <span className="overflow-hidden font-bold">
               {new URL(SITE.website).hostname}
             </span>
           </div>
@@ -85,3 +69,5 @@ export default () => {
     </div>
   );
 };
+
+export default Site

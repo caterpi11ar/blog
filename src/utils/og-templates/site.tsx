@@ -1,7 +1,6 @@
 import { SITE } from "@config";
-import type { FC } from "react";
 
-const Site: FC = () => {
+export default () => {
   return (
     <div
       className="w-full h-full flex items-center justify-center"
@@ -69,5 +68,3 @@ const Site: FC = () => {
     </div>
   );
 };
-
-export default Site

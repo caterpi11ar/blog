@@ -150,7 +150,7 @@ def count_set_bits_lookup(n):
     lookup = [0] * 256
     for i in range(256):
         lookup[i] = (i & 1) + lookup[i >> 1]
-    
+
     count = 0
     while n:
         count += lookup[n & 0xFF]
@@ -201,7 +201,7 @@ print(x, y)  # 10, 5
 def get_highest_set_bit(n):
     if n == 0:
         return 0
-    
+
     # 方法1：逐步右移
     highest = 1
     while n >> 1:
@@ -268,14 +268,14 @@ def generate_subsets(nums):
     # 使用位运算生成所有子集
     n = len(nums)
     subsets = []
-    
+
     for i in range(1 << n):  # 2^n 种可能
         subset = []
         for j in range(n):
             if i & (1 << j):  # 检查第j位是否为1
                 subset.append(nums[j])
         subsets.append(subset)
-    
+
     return subsets
 
 # 示例
@@ -326,23 +326,23 @@ class Bitmap:
     def __init__(self, size):
         self.size = size
         self.bits = [0] * ((size + 31) // 32)  # 每个int存储32位
-    
+
     def set(self, pos):
         # 设置第pos位为1
         if pos < self.size:
             self.bits[pos // 32] |= (1 << (pos % 32))
-    
+
     def clear(self, pos):
         # 清除第pos位
         if pos < self.size:
             self.bits[pos // 32] &= ~(1 << (pos % 32))
-    
+
     def get(self, pos):
         # 获取第pos位的值
         if pos < self.size:
             return (self.bits[pos // 32] >> (pos % 32)) & 1
         return 0
-    
+
     def count_ones(self):
         # 统计1的个数
         count = 0
@@ -366,31 +366,31 @@ def tsp_bitmask(distances):
     # 旅行商问题的位运算解法
     n = len(distances)
     dp = [[float('inf')] * (1 << n) for _ in range(n)]
-    
+
     # 初始化：从城市0开始
     dp[0][1] = 0  # 1表示只访问了城市0
-    
+
     for mask in range(1 << n):
         for last in range(n):
             if not (mask & (1 << last)):
                 continue
-            
+
             # 尝试从last城市到next城市
             for next_city in range(n):
                 if mask & (1 << next_city):
                     continue
-                
+
                 new_mask = mask | (1 << next_city)
                 dp[next_city][new_mask] = min(
                     dp[next_city][new_mask],
                     dp[last][mask] + distances[last][next_city]
                 )
-    
+
     # 返回回到起点的最短路径
     result = float('inf')
     for last in range(1, n):
         result = min(result, dp[last][(1 << n) - 1] + distances[last][0])
-    
+
     return result
 
 # 示例
@@ -452,16 +452,16 @@ class Permission:
 class User:
     def __init__(self, permissions=0):
         self.permissions = permissions
-    
+
     def has_permission(self, permission):
         return (self.permissions & permission) == permission
-    
+
     def add_permission(self, permission):
         self.permissions |= permission
-    
+
     def remove_permission(self, permission):
         self.permissions &= ~permission
-    
+
     def get_permissions(self):
         perms = []
         if self.has_permission(Permission.READ):
@@ -491,11 +491,11 @@ class Color:
         self.g = g
         self.b = b
         self.a = a
-    
+
     def to_int(self):
         # 将RGBA转换为32位整数
         return (self.a << 24) | (self.r << 16) | (self.g << 8) | self.b
-    
+
     @classmethod
     def from_int(cls, color_int):
         # 从32位整数创建Color对象
@@ -504,7 +504,7 @@ class Color:
         g = (color_int >> 8) & 0xFF
         b = color_int & 0xFF
         return cls(r, g, b, a)
-    
+
     def blend(self, other, alpha):
         # 混合两个颜色
         inv_alpha = 1.0 - alpha
@@ -544,7 +544,7 @@ def is_in_subnet(ip, network, mask):
     ip_int = ip_to_int(ip)
     network_int = ip_to_int(network)
     mask_int = ip_to_int(mask)
-    
+
     return (ip_int & mask_int) == (network_int & mask_int)
 
 # 示例
@@ -564,18 +564,18 @@ import time
 # 测试性能差异
 def performance_test():
     n = 10000000
-    
+
     # 测试奇偶性判断
     start = time.time()
     for i in range(n):
         is_even = i % 2 == 0
     mod_time = time.time() - start
-    
+
     start = time.time()
     for i in range(n):
         is_even = (i & 1) == 0
     bit_time = time.time() - start
-    
+
     print(f"模运算时间: {mod_time:.4f}秒")
     print(f"位运算时间: {bit_time:.4f}秒")
     print(f"性能提升: {mod_time/bit_time:.2f}倍")
@@ -593,41 +593,41 @@ class CompressedArray:
         self.bits_per_element = bits_per_element
         self.mask = (1 << bits_per_element) - 1
         self.data = [0] * ((size * bits_per_element + 31) // 32)
-    
+
     def set(self, index, value):
         if index >= self.size or value > self.mask:
             raise ValueError("Invalid index or value")
-        
+
         bit_pos = index * self.bits_per_element
         word_index = bit_pos // 32
         bit_offset = bit_pos % 32
-        
+
         # 清除原有值
         self.data[word_index] &= ~(self.mask << bit_offset)
         # 设置新值
         self.data[word_index] |= (value << bit_offset)
-        
+
         # 处理跨字边界的情况
         if bit_offset + self.bits_per_element > 32:
             remaining_bits = bit_offset + self.bits_per_element - 32
             self.data[word_index + 1] &= ~((1 << remaining_bits) - 1)
             self.data[word_index + 1] |= (value >> (self.bits_per_element - remaining_bits))
-    
+
     def get(self, index):
         if index >= self.size:
             raise ValueError("Invalid index")
-        
+
         bit_pos = index * self.bits_per_element
         word_index = bit_pos // 32
         bit_offset = bit_pos % 32
-        
+
         value = (self.data[word_index] >> bit_offset) & self.mask
-        
+
         # 处理跨字边界的情况
         if bit_offset + self.bits_per_element > 32:
             remaining_bits = bit_offset + self.bits_per_element - 32
             value |= (self.data[word_index + 1] & ((1 << remaining_bits) - 1)) << (self.bits_per_element - remaining_bits)
-        
+
         return value
 
 # 示例
@@ -661,4 +661,4 @@ print(arr.get(1))  # 10
 3. 设计一个基于位运算的权限系统
 4. 优化现有代码中的算术运算为位运算
 
-记住，位运算虽然强大，但也要注意代码的可读性。在性能不是关键因素的情况下，优先选择可读性更好的代码。 
+记住，位运算虽然强大，但也要注意代码的可读性。在性能不是关键因素的情况下，优先选择可读性更好的代码。

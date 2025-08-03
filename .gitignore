@@ -21,3 +21,4 @@ pnpm-debug.log*
 
 # cache
 .eslintcache
+.astro/types.d.ts

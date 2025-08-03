@@ -31,11 +31,11 @@ $ pnpm init
 # pnpm-workspace.yaml
 packages:
   # all packages in direct subdirs of packages/
-  - "packages/*"
+  - 'packages/*'
   # all packages in subdirs of components/
-  - "components/**"
+  - 'components/**'
   # exclude packages that are inside test directories
-  - "!**/test/**"
+  - '!**/test/**'
 ```
 
 目录结构
@@ -61,7 +61,6 @@ packages:
 ```json
 {
   "scripts": {
-    ...省略
     "preinstall": "npx -y only-allow pnpm"
   }
 }
@@ -84,9 +83,11 @@ packages:
 在子项目 `package.json`文件中 声明使用公共依赖
 
 ```json
+{
   "peerDependencies": {
-    "@types/node": "*",
+    "@types/node": "*"
   }
+}
 ```
 
 ### 指定 package 依赖安装
@@ -105,28 +106,29 @@ packages:
 
 ```json
 {
-  ...省略,
   "name": "@foo/utils",
-  "main": "index.js",
+  "main": "index.js"
 }
 ```
 
 ```js
 // bar 中
-import { add } from "@foo/utils";
+import { add } from '@foo/utils'
 ```
 
 `bar 的 package.json`
 
 ```json
+{
   "dependencies": {
     "@foo/utils": "workspace:*"
   }
+}
 ```
 
 ## 发布
 
-[pnpm-changesets]!(https://pnpm.io/zh/using-changesets)
+[pnpm-changesets](https://pnpm.io/zh/using-changesets)
 
 ### 配置
 

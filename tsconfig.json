@@ -2,9 +2,9 @@
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
     "target": "esnext",
-    "module": "esnext",
-    "baseUrl": "src",
     "jsx": "react-jsx",
+    "baseUrl": "src",
+    "module": "esnext",
     "paths": {
       "@assets/*": ["assets/*"],
       "@config": ["config.ts"],

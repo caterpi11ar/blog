@@ -86,7 +86,6 @@ while True:
         break # 猜对时跳出循环
 ```
 
-
 ## 函数
 
 ### 定义与参数
@@ -179,7 +178,6 @@ unzipped_names, unzipped_ages = zip(*data)
 print(f"解压后的名字: {unzipped_names}") # => ('Alice', 'Bob')
 print(f"解压后的年龄: {unzipped_ages}") # => (25, 30)
 ```
-
 
 ## 数据结构与方法详解
 
@@ -311,7 +309,6 @@ print(get_inverse(5))    # => 0.2
 print(get_inverse(0))    # => inf
 print(get_inverse("a"))  # => None
 ```
-
 
 ## 文件操作
 

@@ -1,5 +1,5 @@
 {
-  "name": "mmc-blog",
+  "name": "blog",
   "version": "3.0.0",
   "scripts": {
     "preinstall": "npx -y only-allow pnpm",

@@ -1,12 +1,16 @@
-import type { CollectionEntry } from 'astro:content'
 import { SITE } from '@config'
+import type { CollectionEntry } from 'astro:content'
 
 export default (post: CollectionEntry<'blog'>) => {
   return (
     <div
-      className="flex items-center justify-center w-full h-full"
       style={{
         background: '#fefbfb',
+        width: '100%',
+        height: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
       }}
     >
       <div
@@ -68,8 +72,7 @@ export default (post: CollectionEntry<'blog'>) => {
             }}
           >
             <span>
-              by
-              {' '}
+              by{' '}
               <span
                 style={{
                   color: 'transparent',

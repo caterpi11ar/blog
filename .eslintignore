@@ -1,7 +1,0 @@
-.vscode
-node_modules
-public
-dist
-.yarn
-
-.astro/types.d.ts

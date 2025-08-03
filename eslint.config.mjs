@@ -6,6 +6,8 @@ export default antfu({
   ignores: [
     '.astro/types.d.ts',
     '**/*.d.ts',
+    'dist/**', // 忽略构建输出目录
+    'node_modules/**', // 忽略 node_modules
   ],
   rules: {
     'no-console': [

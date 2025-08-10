@@ -14,6 +14,7 @@ export default (post: CollectionEntry<'blog'>) => {
       }}
     >
       <div
+        className="absolute flex justify-center"
         style={{
           position: 'absolute',
           top: '-1px',
@@ -31,6 +32,7 @@ export default (post: CollectionEntry<'blog'>) => {
       />
 
       <div
+        className="flex justify-center"
         style={{
           border: '4px solid #000',
           background: '#fefbfb',
@@ -43,6 +45,7 @@ export default (post: CollectionEntry<'blog'>) => {
         }}
       >
         <div
+          className="flex-col flex justify-between"
           style={{
             display: 'flex',
             flexDirection: 'column',
@@ -53,6 +56,7 @@ export default (post: CollectionEntry<'blog'>) => {
           }}
         >
           <p
+            className="overflow-hidden font-bold"
             style={{
               fontSize: 72,
               fontWeight: 'bold',
@@ -63,6 +67,7 @@ export default (post: CollectionEntry<'blog'>) => {
             {post.data.title}
           </p>
           <div
+            className="flex justify-between w-full mb-2"
             style={{
               display: 'flex',
               justifyContent: 'space-between',

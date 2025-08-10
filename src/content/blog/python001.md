@@ -18,26 +18,24 @@ description: 一份最Python 速查笔记
 
 1.  [核心数据类型](#核心数据类型)
 2.  [控制流](#控制流)
-3.  [函数 (深入理解)](#函数-深入理解)
-4.  [常用内置函数 (多场景示例)](#常用内置函数-多场景示例)
+3.  [函数](#函数)
+4.  [常用内置函数](#常用内置函数)
 5.  [数据结构与方法详解](#数据结构与方法详解)
-6.  [面向对象编程 (OOP)](#面向对象编程-oop)
-7.  [异常处理](#异常处理)
-8.  [文件操作](#文件操作)
-9.  [模块和包](#模块和包)
-10. [高级技巧](#高级技巧)
+6.  [异常处理](#异常处理)
+7.  [常用内置函数](#常用内置函数)
+8.  [高级技巧](#高级技巧)
 
 ## 核心数据类型
 
--   **int**: `42`
--   **float**: `3.14`
--   **bool**: `True`, `False`
--   **str**: `"Hello"`, `'World'`, `'''多行字符串'''`
--   **NoneType**: `None`
--   **list**: `[1, "apple", True]` (有序，可变)
--   **tuple**: `(1, "apple", True)` (有序，不可变)
--   **dict**: `{"key": "value", "age": 25}` (键值对，可变)
--   **set**: `{1, 2, 3}` (无序，不重复，可变)
+- **int**: `42`
+- **float**: `3.14`
+- **bool**: `True`, `False`
+- **str**: `"Hello"`, `'World'`, `'''多行字符串'''`
+- **NoneType**: `None`
+- **list**: `[1, "apple", True]` (有序，可变)
+- **tuple**: `(1, "apple", True)` (有序，不可变)
+- **dict**: `{"key": "value", "age": 25}` (键值对，可变)
+- **set**: `{1, 2, 3}` (无序，不重复，可变)
 
 ## 控制流
 
@@ -122,7 +120,7 @@ print(profile2)
 # 输出: {'username': 'Bob', 'email': 'bob@example.com', 'interests': ('music', 'sports'), 'country': 'Canada'}
 ```
 
-## 常用内置函数 (多场景示例)
+## 常用内置函数
 
 ### `sorted(iterable, key=None, reverse=False)`
 
@@ -274,55 +272,30 @@ len([1, 2, 3])           # 3
 type(42)                 # <class 'int'>
 isinstance(42, int)      # True
 id(obj)                  # 对象ID
+```
 
-# 数学函数
+### 数学函数
+```python
 abs(-5)                  # 5
 max([1, 2, 3])          # 3
 min([1, 2, 3])          # 1
 sum([1, 2, 3])          # 6
 round(3.14159, 2)       # 3.14
+```
 
-# 序列函数
+### 序列函数
+```python
 sorted([3, 1, 4, 1, 5]) # [1, 1, 3, 4, 5]
 reversed([1, 2, 3])     # 迭代器
 enumerate(['a', 'b'])   # [(0, 'a'), (1, 'b')]
 zip([1, 2], ['a', 'b']) # [(1, 'a'), (2, 'b')]
+```
 
-# 函数式编程
+### 函数式编程
+```python
 map(lambda x: x**2, [1, 2, 3])     # 迭代器
 filter(lambda x: x > 0, [-1, 0, 1]) # 迭代器
 reduce(lambda x, y: x + y, [1, 2, 3]) # 6 (需要 from functools import reduce)
-```
-
-这个简化版本保留了 Python3 的核心语法和实用技巧，去除了过于基础的解释，更适合有编程经验的开发者快速查阅和使用。
-def get_inverse(x):
-    try:
-        return 1 / x
-    except TypeError:
-        print("错误: 输入必须是数字。")
-        return None
-    except ZeroDivisionError:
-        print("错误: 不能输入零。")
-        return float('inf') # 返回无穷大作为特殊处理
-
-print(get_inverse(5))    # => 0.2
-print(get_inverse(0))    # => inf
-print(get_inverse("a"))  # => None
-```
-
-## 文件操作
-
-```python
-# 写入多行
-lines_to_write = ["第一行\n", "第二行\n", "第三行\n"]
-with open("mylog.txt", "w", encoding="utf-8") as f:
-    f.writelines(lines_to_write)
-
-# 读取所有行到列表中
-with open("mylog.txt", "r", encoding="utf-8") as f:
-    lines = f.readlines()
-    print(f"读取到的行: {lines}")
-    # => ['第一行\n', '第二行\n', '第三行\n']
 ```
 
 ## 高级技巧

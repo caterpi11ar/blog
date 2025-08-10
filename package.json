@@ -1,5 +1,5 @@
 {
-  "name": "mmc-blog",
+  "name": "blog",
   "version": "3.0.0",
   "scripts": {
     "preinstall": "npx -y only-allow pnpm",
@@ -11,7 +11,7 @@
     "astro": "astro",
     "cz": "cz",
     "typecheck": "tsc --noEmit",
-    "lint:fix": "eslint --fix --cache ."
+    "lint:fix": "pnpm dlx eslint . --ext .ts,.tsx,.astro,.md,.mdx --fix --cache"
   },
   "dependencies": {
     "@astrojs/check": "^0.2.0",

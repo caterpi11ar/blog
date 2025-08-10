@@ -3,6 +3,7 @@
   "editor.tabSize": 2,
   "typescript.tsserver.enableRegionDiagnostics": true,
   "cSpell.words": [
+    "eslintcache",
     "Popconfirm",
     "tagify",
     "tele"

@@ -192,6 +192,20 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"fe-interview-checklist.md": {
+	id: "fe-interview-checklist.md";
+  slug: "fe-interview-checklist";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"fe-interview-handwriting.md": {
+	id: "fe-interview-handwriting.md";
+  slug: "fe-interview-handwriting";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "leetcode001.md": {
 	id: "leetcode001.md";
   slug: "leetcode001";

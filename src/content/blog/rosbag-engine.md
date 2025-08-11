@@ -6,10 +6,7 @@ featured: false
 draft: false
 tags:
   - 开源项目
-  - ROSBag
-  - 浏览器引擎
-  - 数据解析
-  - Web Workers
+  - 机器人
 description: 浏览器环境设计的 ROSBag 解析、播放和渲染引擎，支持实时数据流处理和可视化。
 ---
 

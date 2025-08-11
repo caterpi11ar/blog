@@ -1,15 +1,11 @@
 ---
-author: 前端面试规划师
+author: caterpi11ar
 pubDatetime: 2025-08-01T00:00:00Z
 title: 前端大厂面试准备计划
 postSlug: fe-interview-plan
 draft: false
 tags:
-  - 面试准备
-  - 前端进阶
-  - 职业规划
-  - React
-  - 薪资谈判
+  - 面试
 description: 3年前端经验，机器人行业背景，目标冲击上海大厂30-35k薪资的6个月面试准备详细计划
 ---
 

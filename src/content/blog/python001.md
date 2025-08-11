@@ -6,9 +6,6 @@ featured: false
 draft: false
 tags:
   - Python
-  - 编程语言
-  - 学习笔记
-  - 基础语法
 description: 一份最Python 速查笔记
 ---
 

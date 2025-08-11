@@ -5,7 +5,7 @@ pubDatetime: 2025-07-24T00:00:00
 featured: false
 draft: false
 tags:
-  - leetcode
+  - 算法
 description: 记录刷算法题目进度
 ---
 

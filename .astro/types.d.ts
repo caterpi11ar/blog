@@ -199,16 +199,16 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"fe-interview-handwriting.md": {
-	id: "fe-interview-handwriting.md";
-  slug: "fe-interview-handwriting";
+"fe-interview-plan.md": {
+	id: "fe-interview-plan.md";
+  slug: "fe-interview-plan";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"leetcode001.md": {
-	id: "leetcode001.md";
-  slug: "leetcode001";
+"leetcode-plan.md": {
+	id: "leetcode-plan.md";
+  slug: "leetcode-plan";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -223,6 +223,27 @@ declare module 'astro:content' {
 "python001.md": {
 	id: "python001.md";
   slug: "python001";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"react-filter-component.md": {
+	id: "react-filter-component.md";
+  slug: "react-filter-component";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"rosbag-engine.md": {
+	id: "rosbag-engine.md";
+  slug: "rosbag-engine";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"studio-platform.md": {
+	id: "studio-platform.md";
+  slug: "studio-platform";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">

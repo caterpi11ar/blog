@@ -192,16 +192,23 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"fe-interview-checklist.md": {
-	id: "fe-interview-checklist.md";
-  slug: "fe-interview-checklist";
+"cursor/util.md": {
+	id: "cursor/util.md";
+  slug: "cursor/util";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"fe-interview-plan.md": {
-	id: "fe-interview-plan.md";
-  slug: "fe-interview-plan";
+"interview/fe-interview-checklist.md": {
+	id: "interview/fe-interview-checklist.md";
+  slug: "interview/fe-interview-checklist";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"interview/fe-interview-plan.md": {
+	id: "interview/fe-interview-plan.md";
+  slug: "interview/fe-interview-plan";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -220,30 +227,30 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"python001.md": {
-	id: "python001.md";
-  slug: "python001";
+"project/react-filter-component.md": {
+	id: "project/react-filter-component.md";
+  slug: "project/react-filter-component";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"react-filter-component.md": {
-	id: "react-filter-component.md";
-  slug: "react-filter-component";
+"project/rosbag-engine.md": {
+	id: "project/rosbag-engine.md";
+  slug: "project/rosbag-engine";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"rosbag-engine.md": {
-	id: "rosbag-engine.md";
-  slug: "rosbag-engine";
+"project/studio-platform.md": {
+	id: "project/studio-platform.md";
+  slug: "project/studio-platform";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"studio-platform.md": {
-	id: "studio-platform.md";
-  slug: "studio-platform";
+"python/python001.md": {
+	id: "python/python001.md";
+  slug: "python/python001";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">

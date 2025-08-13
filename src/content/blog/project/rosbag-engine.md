@@ -38,7 +38,7 @@ description: 浏览器环境设计的 ROSBag 解析、播放和渲染引擎，�
 
 ### 模块概述
 
-`src/core/rosbag-engine` 提供浏览器端的 ROS bag / MCAP 数据读取、解析与流式播放能力，覆盖远程分块读取、Worker 线程解析、按主题/时间窗口迭代、按需字段投影与内存/缓存控制，支持在超大文件场景下的在线标注与可视化。
+`rosbag-engine` 提供浏览器端的 ROS bag / MCAP 数据读取、解析与流式播放能力，覆盖远程分块读取、Worker 线程解析、按主题/时间窗口迭代、按需字段投影与内存/缓存控制，支持在超大文件场景下的在线标注与可视化。
 
 核心目标：
 - 在浏览器中以流式方式处理超大文件（远程 URL 与本地文件）
@@ -74,32 +74,6 @@ description: 浏览器环境设计的 ROSBag 解析、播放和渲染引擎，�
    - 消息对象体积估算（字节级），利于策略与统计
 6. 可中止与容错
    - 自定义 Comlink TransferHandler 传递 AbortSignal，支持随时中止
-
-```mermaid
-sequenceDiagram
-  participant UI
-  participant Factory as RemoteDataSourceFactory
-  participant Main as WorkerIterableSource
-  participant W as WorkerIterableSourceWorker
-  participant Source as Bag/Mcap Source
-
-  UI->>Factory: initialize({ url })
-  Factory->>Main: new WorkerIterableSource(initWorker)
-  Main->>W: initialize(args) via Comlink
-  W->>Source: initialize()
-  Source-->>W: start/end/topics
-  W-->>Main: Initalization
-  Main-->>UI: Initalization
-  UI->>Main: messageIterator(args)
-  Main->>W: getMessageCursor(args)
-  loop every ~17ms
-    Main->>W: nextBatch(17)
-    W->>Source: iterator.next()/readUntil
-    Source-->>W: IteratorResult[]
-    W-->>Main: IteratorResult[]
-    Main-->>UI: yield* results
-  end
-```
 
 ---
 

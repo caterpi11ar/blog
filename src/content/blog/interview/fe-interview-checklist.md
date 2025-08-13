@@ -2,7 +2,7 @@
 title: 前端面试知识点检查清单
 author: caterpi11ar
 pubDatetime: 2025-08-10T06:00:00
-featured: true
+featured: false
 draft: false
 tags:
   - 面试

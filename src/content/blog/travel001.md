@@ -2,7 +2,7 @@
 title: 杭州2天1夜旅行攻略
 author: caterpillar
 pubDatetime: 2025-07-30T00:00:00
-featured: true
+featured: false
 draft: false
 tags:
   - 杭州

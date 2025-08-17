@@ -3,14 +3,14 @@ title: 杭州2天1夜旅行攻略
 author: caterpillar
 pubDatetime: 2025-07-30T00:00:00
 featured: false
-draft: false
+draft: true
 tags:
   - 杭州
   - 旅行计划
 description: 杭州2天1夜 旅行计划
 ---
 
-# 杭州2天1夜旅行攻略
+# <del>杭州2天1夜旅行攻略</del>寄了
 
 **酒店位置**: 地铁2号线 **万安桥站** 附近。
 **返程车站**: 杭州东站 8月17日17:00

@@ -1,4 +1,4 @@
-# mmc-blog
+# blog
 
 一个基于 [Astro](https://astro.build) 构建的现代、响应式、SEO友好的博客。这个博客具有简洁的设计、深色/浅色模式支持以及出色的性能表现。
 

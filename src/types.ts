@@ -8,12 +8,12 @@ export interface Site {
   postPerPage: number
 }
 
-export type SocialObjects = {
+export type SocialObjects = Array<{
   name: SocialMedia
   href: string
   active: boolean
   linkTitle: string
-}[]
+}>
 
 export type SocialIcons = {
   [social in SocialMedia]: string;

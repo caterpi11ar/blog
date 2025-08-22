@@ -2,6 +2,7 @@
 import type { CollectionEntry } from 'astro:content'
 import Datetime from '@components/Datetime'
 import Footer from '@components/Footer.astro'
+import Giscus from '@components/Giscus'
 import Header from '@components/Header.astro'
 import Tag from '@components/Tag.astro'
 import Layout from '@layouts/Layout.astro'
@@ -67,6 +68,13 @@ const layoutProps = {
     <article id="article" role="article" class="prose mx-auto mt-8 max-w-3xl">
       <Content />
     </article>
+
+    <Giscus
+      client:load
+      repo={import.meta.env.PUBLIC_GISCUS_REPO}
+      repoId={import.meta.env.PUBLIC_GISCUS_REPO_ID}
+      categoryId={import.meta.env.PUBLIC_GISCUS_CATEGORY_ID}
+    />
 
     <ul class="my-8">
       {tags.map(tag => <Tag name={slugifyStr(tag)} />)}

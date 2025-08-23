@@ -46,13 +46,11 @@ description: 前端面试必备知识点检查清单，覆盖 JavaScript、React
   // 返回指定索引处的字符，支持负数索引
   str.at(index)
 
-
   // 支持负数索引从后往前数，end省略则到末尾，start > end 时返回空字符串
-  str.slice(start, end)  // 返回子字符串（不修改原字符串）
-
+  str.slice(start, end) // 返回子字符串（不修改原字符串）
 
   // 自动交换 start/end 顺序，end省略则到末尾
-  str.substring(start, end)   // 返回子字符串（不修改原字符串）
+  str.substring(start, end) // 回子字符串（不修改原字符串）
   ```
 
 - [x] **Boolean** - 布尔类型
@@ -64,27 +62,27 @@ description: 前端面试必备知识点检查清单，覆盖 JavaScript、React
 - [x] **undefined** - 未定义值，表示变量声明但未赋值
   ```javascript
   // 不是保留字，使用 -2^30（超出整数范围的数字）表示
-  let value; // undefined
+  let value // undefined
   ```
 
 - [x] **null** - 空值，表示空对象引用
   ```javascript
   // 早期版本中表示为全零（0x00 机器码）
   // typeof null 返回 "object"（历史遗留问题，null 的二进制前三位全为 0）
-  const value = null;
+  const value = null
   ```
 
 - [x] **Symbol** - 唯一且不可变的数据类型
   ```javascript
   // 实例是唯一的，常用于对象属性键避免命名冲突
-  const key = Symbol('description');
+  const key = Symbol('description')
   ```
 
 - [x] **BigInt** - 大整数类型，可以表示任意大小的整数
   ```javascript
   // 不能使用 new，不能与 Number 混合运算
-  const bigIntValue = 1234567890123456789012345678901234567890n;
-  const bigIntFromNumber = BigInt(123);
+  const bigIntValue = 1234567890123456789012345678901234567890n
+  const bigIntFromNumber = BigInt(123)
   ```
 
 #### 引用数据类型
@@ -109,10 +107,10 @@ description: 前端面试必备知识点检查清单，覆盖 JavaScript、React
 
   // 稀疏数组：空位（empty slots）行为规范明确
   // .map(), .forEach(), .filter() 等方法跳过空位
-  const sparseArray = [1, , 3]; // 稀疏数组示例
+  const sparseArray = [1, , 3] // 稀疏数组示例
 
   // 就地移除/替换/添加元素（修改原数组）
-  Array.splice(start, deleteCount, ...items)
+  Arrayplice(start, deleteCount, ...items)
 
   // 返回新数组（不修改原数组），start > end 时返回空数组
   Array.slice(start, end)
@@ -156,62 +154,61 @@ description: 前端面试必备知识点检查清单，覆盖 JavaScript、React
 - [ ] **类型转换规则**
   ```javascript
   // 隐式转换
-  const result1 = 1 + '2';          // '12' (数字转字符串)
-  const result2 = '2' * 3;          // 6 (字符串转数字)
-  const result3 = 0 == false;       // true (数字转布尔)
-  const result4 = null == undefined; // true (特殊情况)
+  const result1 = `${1 }2`; // '12' (数字转字符串)
+  const result2 = '2' * 3 // 6 (字符串转数字)
+  const result3 = 0 == false // true (数字转布尔)
+  const result4 = undefined == null // true (特殊情况)
 
   // == vs === 的区别
-  const eq1 = 0 == false;       // true (类型转换)
-  const eq2 = 0 === false;      // false (严格相等)
+  consteq1 = 0ffalse == 0      // true (类型转换)
+  consteq2 = 0ffalse === 0     // false (严格相等)
 
   // + 操作符的类型转换
-  const num1 = + '123';          // 123 (字符串转数字)
-  const num2 = + true;           // 1 (布尔转数字)
-  const num3 = + null;           // 0 (null转数字)
-  const num4 = + undefined;      // NaN (undefined转数字)
+  constum1 = + 23';  23 (字符串转数字)
+  const num2 = + ue;   (布尔转数字)
+  const num3 = + ll;   (null转数字)
+  const num4 = + defined;  aN (undefined转数字)
   ```
 
 - [ ] **判断数组的方法**
   ```javascript
   // 1. Array.isArray() (推荐)
-  const isArray1 = Array.isArray([]);  // true
+  const isArray1 = Array.isArray([])  // true
 
   // 2. instanceof
-  const arr = [];
-  const isArray2 = arr instanceof Array;  // true
+  constarr = []]
+  constisArray2 = aArray.isArray(arr)  / true
 
   // 3. constructor
-  const isArray3 = [].constructor === Array;  // true
+  const isArray3 = [].constructor === ArArray  // true
 
   // 4. Object.prototype.toString
-  const isArray4 = Object.prototype.toString.call([]) === '[object Array]';  // true
+  constArray4 = Object.prototype.toString.call([]) === '[o'[object Array]'  // true
 
   // 5. 鸭子类型判断
-  function isArrayLike(obj) {
-    return obj && typeof obj.length === 'number';
-  }
-  ```
+  functionrrayLike(obj) {
+    return obj && typeof obj.length === 'num'number'
+  }`
 
 - [ ] **null vs undefined**
   ```javascript
   // undefined 的场景
-  let value;                    // 未初始化
-  function fn(param) { }        // 缺少参数
+  let value                    // 未初始化
+  function fn(param) { } // 缺少参数
   // return;                      // 没有返回值的函数
-  const obj = {};
+  const obj = {}
   // obj.nonExistentProperty      // 不存在的属性
 
   // null 的场景
-  let nullValue = null;            // 明确表示空值
-  JSON.stringify({key: null});     // 序列化时的空值
-  Object.create(null);             // 创建无原型对象
+  letnullValue = nnull            // 明确表示空值
+  JSONstringify({k ey: null} ))     // 序列化时的空值
+  Objectcreate(null))             // 创建无原型对象
 
   // 区别
-  const typeUndefined = typeof undefined;  // "undefined"
-  const typeNull = typeof null;            // "object"
-  const eq1 = undefined == null;   // true
-  const eq2 = undefined === null;  // false
+  constypeUndefined = typeof unundefined  // "undefined"
+  constypeNull = typeof nunull            // "object"
+  constq1 = undefined == nunull   // true
+  constq2 = undefined === nunull// false
   ```
 
 ### [迭代协议](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Iteration_protocols)

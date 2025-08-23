@@ -1,5 +1,6 @@
-import React, { useState, useRef, useImperativeHandle, forwardRef } from 'react'
-import type { Command, CommandDialogRef } from './CommandDialog'
+import type { KeyboardEvent } from 'react'
+import type { Command } from './CommandDialog'
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
 
 // 悬浮球属性接口
 export interface FloatingCommandProps {
@@ -17,11 +18,19 @@ export interface FloatingCommandRef {
   closeDialog: () => void
 }
 
+// 位置样式映射
+const positionStyles = {
+  'bottom-right': 'bottom-6 right-6',
+  'bottom-left': 'bottom-6 left-6',
+  'top-right': 'top-6 right-6',
+  'top-left': 'top-6 left-6',
+}
+
 const FloatingCommand = forwardRef<FloatingCommandRef, FloatingCommandProps>(
-  ({ 
-    initialCommands = [], 
-    className = "",
-    position = 'bottom-right'
+  ({
+    initialCommands = [],
+    className = '',
+    position = 'bottom-right',
   }, ref) => {
     const [isOpen, setIsOpen] = useState(false)
     const [selectedCommand, setSelectedCommand] = useState<Command | null>(null)
@@ -31,17 +40,30 @@ const FloatingCommand = forwardRef<FloatingCommandRef, FloatingCommandProps>(
     const [error, setError] = useState<string | null>(null)
     const [showCommandMenu, setShowCommandMenu] = useState(false)
     const [searchTerm, setSearchTerm] = useState('')
-    
+    const [isParameterValid, setIsParameterValid] = useState(true) // 参数验证状态
+
     // 指令存储
     const commandsRef = useRef<Map<string, Command>>(new Map())
-    
+
     // 初始化指令
-    React.useEffect(() => {
-      initialCommands.forEach(command => {
+    useEffect(() => {
+      initialCommands.forEach((command) => {
         commandsRef.current.set(command.name, command)
       })
     }, [initialCommands])
-    
+
+    // 监听点击外部关闭菜单
+    useEffect(() => {
+      const handleClickOutside = (e: MouseEvent) => {
+        if (showCommandMenu && !(e.target as Element).closest('.command-search-container')) {
+          setShowCommandMenu(false)
+        }
+      }
+
+      document.addEventListener('mousedown', handleClickOutside)
+      return () => document.removeEventListener('mousedown', handleClickOutside)
+    }, [showCommandMenu])
+
     // 暴露方法给父组件
     useImperativeHandle(ref, () => ({
       registerCommand: (command: Command) => {
@@ -54,41 +76,65 @@ const FloatingCommand = forwardRef<FloatingCommandRef, FloatingCommandProps>(
         return Array.from(commandsRef.current.keys())
       },
       openDialog: () => setIsOpen(true),
-      closeDialog: () => setIsOpen(false)
+      closeDialog: () => setIsOpen(false),
     }))
-    
+
     // 执行指令
     const executeCommand = async (command: Command, args: string[]) => {
       try {
         const result = await command.handler(args)
         return result
-      } catch (error) {
+      }
+      catch (error) {
         throw new Error(`执行指令 ${command.name} 时出错: ${error instanceof Error ? error.message : '未知错误'}`)
       }
     }
-    
+
+    // 验证指令参数
+    const validateParameters = (command: Command, args: string[]): boolean => {
+      // 如果指令设置为必填，检查是否有输入内容
+      if (command.required && (!args || args.length === 0 || args.every(arg => !arg.trim()))) {
+        setIsParameterValid(false)
+        return false
+      }
+
+      setIsParameterValid(true)
+      return true
+    }
+
     // 处理发送
     const handleSend = async () => {
-      if (!selectedCommand) return
-      
+      if (!selectedCommand)
+        return
+
+      // 获取用户输入的参数
+      const args = commandArgs.trim() ? commandArgs.trim().split(/\s+/) : []
+
+      // 验证必填参数
+      if (!validateParameters(selectedCommand, args)) {
+        // 参数验证失败时不显示在结果区域，只通过UI状态提示
+        return
+      }
+
       setIsLoading(true)
       setError(null)
       setResult(null)
-      
+
       try {
-        const args = commandArgs.trim() ? commandArgs.trim().split(/\s+/) : []
         const result = await executeCommand(selectedCommand, args)
         setResult(result)
         setCommandArgs('') // 清空输入
-      } catch (error) {
+      }
+      catch (error) {
         setError(error instanceof Error ? error.message : '执行失败')
-      } finally {
+      }
+      finally {
         setIsLoading(false)
       }
     }
-    
+
     // 处理键盘事件
-    const handleKeyDown = (e: React.KeyboardEvent) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
         e.preventDefault()
         handleSend()
@@ -98,127 +144,89 @@ const FloatingCommand = forwardRef<FloatingCommandRef, FloatingCommandProps>(
         setShowCommandMenu(false)
       }
     }
-    
+
     // 选择指令
     const handleCommandSelect = (command: Command) => {
       setSelectedCommand(command)
       setShowCommandMenu(false)
-      setSearchTerm('')
+      setSearchTerm('') // 清空搜索框，方便下次搜索
+      setCommandArgs('') // 清空之前的参数输入
+      setIsParameterValid(true) // 重置参数验证状态
+      setError(null) // 清空之前的错误
+      setResult(null) // 清空之前的结果
     }
-    
+
     // 过滤指令
     const filteredCommands = Array.from(commandsRef.current.values()).filter(command =>
-      command.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      command.description.toLowerCase().includes(searchTerm.toLowerCase())
+      command.name.toLowerCase().includes(searchTerm.toLowerCase())
+      || command.description.toLowerCase().includes(searchTerm.toLowerCase()),
     )
-    
-    // 位置样式映射
-    const positionStyles = {
-      'bottom-right': 'bottom-6 right-6',
-      'bottom-left': 'bottom-6 left-6',
-      'top-right': 'top-6 right-6',
-      'top-left': 'top-6 left-6'
-    }
-    
+
     return (
       <>
         {/* 悬浮球 */}
-        <div 
+        <div
           className={`fixed ${positionStyles[position]} z-50 ${className}`}
           onClick={() => setIsOpen(true)}
         >
-          <div className="w-12 h-12 bg-white border border-gray-300 rounded-full shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer">
+          <div className="w-12 h-12 bg-[#fffefb] border border-gray-300 rounded-full shadow-sm hover:shadow-md transition-all duration-200 cursor-pointer">
             <div className="w-full h-full flex items-center justify-center">
-              <svg 
-                className="w-5 h-5 text-gray-600" 
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24"
-              >
-                <path 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  strokeWidth={2} 
-                  d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" 
-                />
+              <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="7552" width="20" height="20">
+                <path d="M512 64c259.2 0 469.333333 200.576 469.333333 448s-210.133333 448-469.333333 448a484.48 484.48 0 0 1-232.725333-58.88l-116.394667 50.645333a42.666667 42.666667 0 0 1-58.517333-49.002666l29.76-125.013334C76.629333 703.402667 42.666667 611.477333 42.666667 512 42.666667 264.576 252.8 64 512 64z m0 64C287.488 128 106.666667 300.586667 106.666667 512c0 79.573333 25.557333 155.434667 72.554666 219.285333l5.525334 7.317334 18.709333 24.192-26.965333 113.237333 105.984-46.08 27.477333 15.018667C370.858667 878.229333 439.978667 896 512 896c224.512 0 405.333333-172.586667 405.333333-384S736.512 128 512 128z m-157.696 341.333333a42.666667 42.666667 0 1 1 0 85.333334 42.666667 42.666667 0 0 1 0-85.333334z m159.018667 0a42.666667 42.666667 0 1 1 0 85.333334 42.666667 42.666667 0 0 1 0-85.333334z m158.997333 0a42.666667 42.666667 0 1 1 0 85.333334 42.666667 42.666667 0 0 1 0-85.333334z" fill="#333333" p-id="7553"></path>
               </svg>
             </div>
           </div>
         </div>
-        
+
         {/* 对话框 */}
         {isOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/10">
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/10">
             <div className="w-full max-w-4xl bg-white border border-gray-200 rounded-lg shadow-lg overflow-hidden">
               {/* 对话框头部 */}
-              <div className="flex items-center justify-between p-4 border-b border-gray-200">
-                <div className="flex items-center space-x-3">
-                  <div className="w-6 h-6 bg-gray-100 rounded flex items-center justify-center">
-                    <svg className="w-3 h-3 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                    </svg>
-                  </div>
+              <div className="flex items-center justify-between p-4 border-b border-gray-200 relative">
+                <div className="flex items-center">
                   <div>
-                    <h3 className="text-base font-medium text-gray-900">指令助手</h3>
+                    <h3 className="text-lg font-semibold text-gray-900">指令助手</h3>
                     <p className="text-sm text-gray-500">选择指令并执行操作</p>
                   </div>
                 </div>
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="p-1 hover:bg-gray-100 rounded transition-colors duration-200"
+                  className="hover:bg-gray-100 w-8 h-8 rounded transition-colors duration-200 absolute top-2 right-2"
                 >
-                  <svg className="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>
               </div>
-              
+
               {/* 对话框内容 - 重新设计为左右布局 */}
               <div className="flex min-h-[500px]">
                 {/* 左侧：指令选择区域 */}
-                <div className="w-1/2 border-r border-gray-200 p-6">
+                <div className="w-1/2 border-r border-gray-200 p-4">
                   <div className="space-y-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">选择指令</label>
-                      
-                      {/* 指令选择按钮 */}
-                      <div className="relative">
-                        <button
-                          onClick={() => setShowCommandMenu(!showCommandMenu)}
-                          className="w-full px-3 py-2 text-left border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400 bg-white"
-                        >
-                          {selectedCommand ? (
-                            <div className="flex items-center justify-between">
-                              <span className="text-gray-900">{selectedCommand.name}</span>
-                              <span className="text-sm text-gray-500">{selectedCommand.description}</span>
-                            </div>
-                          ) : (
-                            <span className="text-gray-500">点击选择指令...</span>
-                          )}
-                          <svg className="w-4 h-4 text-gray-400 ml-2 float-right" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                          </svg>
-                        </button>
-                        
-                        {/* 指令下拉菜单 - 扩大显示区域 */}
+
+                      {/* 整合的搜索和选择区域 */}
+                      <div className="relative command-search-container">
+                        <input
+                          type="text"
+                          placeholder="搜索或选择指令..."
+                          value={searchTerm}
+                          onChange={e => setSearchTerm(e.target.value)}
+                          onFocus={() => setShowCommandMenu(true)}
+                          className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400 bg-white"
+                          autoComplete="off"
+                        />
+
+                        {/* 指令下拉菜单 */}
                         {showCommandMenu && (
                           <div className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-80 overflow-auto">
-                            {/* 搜索框 */}
-                            <div className="p-3 border-b border-gray-200 sticky top-0 bg-white">
-                              <input
-                                type="text"
-                                placeholder="搜索指令..."
-                                value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
-                                className="w-full px-3 py-2 border border-gray-300 rounded text-sm focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400"
-                                autoFocus
-                              />
-                            </div>
-                            
-                            {/* 指令列表 - 显示更多内容 */}
+                            {/* 指令列表 */}
                             <div className="py-1">
                               {filteredCommands.length > 0 ? (
-                                filteredCommands.map((command) => (
+                                filteredCommands.map(command => (
                                   <button
                                     key={command.name}
                                     onClick={() => handleCommandSelect(command)}
@@ -235,36 +243,105 @@ const FloatingCommand = forwardRef<FloatingCommandRef, FloatingCommandProps>(
                                     </div>
                                   </button>
                                 ))
-                              ) : (
+                              ) : searchTerm ? (
                                 <div className="px-4 py-3 text-sm text-gray-500">没有找到匹配的指令</div>
+                              ) : (
+                                <div className="px-4 py-3 text-sm text-gray-500">请输入关键词搜索指令</div>
                               )}
                             </div>
                           </div>
                         )}
                       </div>
                     </div>
-                    
+
+                    {/* 已选择的指令展示区域 */}
+                    {selectedCommand && (
+                      <div className="bg-blue-50 border border-blue-200 rounded-lg p-3 relative">
+                        <div className="flex items-start justify-between">
+                          <div className="flex-1">
+                            <div className="text-lg font-semibold text-blue-800 mb-1">
+                              @
+                              {selectedCommand.name}
+                            </div>
+                            <div className="text-sm text-blue-700">
+                              {selectedCommand.description}
+                            </div>
+                          </div>
+                          <button
+                            onClick={() => {
+                              setSelectedCommand(null)
+                              setCommandArgs('')
+                              setIsParameterValid(true)
+                              setError(null)
+                              setResult(null)
+                            }}
+                            className="hover:bg-blue-100 w-6 h-6 rounded transition-colors duration-200 text-blue-500 absolute top-2 right-2"
+                            title="重新选择指令"
+                          >
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                    )}
+
                     {/* 参数输入区域 - 改为多行文本 */}
                     {selectedCommand && (
                       <div className="space-y-3">
-                        <label className="block text-sm font-medium text-gray-700">
-                          指令参数 (可选)
-                        </label>
+                        <div className="flex items-center justify-between">
+                          <label className="block text-sm font-medium text-gray-700">
+                            指令参数
+                            {selectedCommand.required && (
+                              <span className="ml-2 text-xs text-red-600 bg-red-50 px-2 py-1 rounded border border-red-200">
+                                必填
+                              </span>
+                            )}
+                          </label>
+                        </div>
+
                         <textarea
                           value={commandArgs}
-                          onChange={(e) => setCommandArgs(e.target.value)}
+                          onChange={(e) => {
+                            setCommandArgs(e.target.value)
+                            // 实时验证：当用户输入内容时，清除错误状态
+                            if (e.target.value.trim() && !isParameterValid) {
+                              setIsParameterValid(true)
+                              setError(null)
+                            }
+                          }}
                           onKeyDown={handleKeyDown}
-                          placeholder={`输入 ${selectedCommand.name} 的参数，支持多行输入\n用空格分隔多个参数\n按 Ctrl+Enter 执行`}
+                          placeholder={
+                            selectedCommand.required
+                              ? `输入 ${selectedCommand.name} 的参数 (必填)\n用空格分隔多个参数\n按 Ctrl+Enter 执行`
+                              : `输入 ${selectedCommand.name} 的参数，支持多行输入\n用空格分隔多个参数\n按 Ctrl+Enter 执行`
+                          }
                           rows={6}
-                          className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-gray-400 focus:border-gray-400 resize-none"
+                          className={`w-full px-3 py-2 border rounded focus:outline-none focus:ring-1 focus:ring-gray-400 resize-none ${selectedCommand.required && !isParameterValid
+                            ? 'border-red-500 focus:border-red-500 focus:ring-red-400'
+                            : 'border-gray-300 focus:border-gray-400'
+                          }`}
                           disabled={isLoading}
                         />
+
+                        {/* 必填参数提示 */}
+                        {selectedCommand.required && !isParameterValid && (
+                          <div className="text-sm text-red-600 bg-red-50 px-3 py-2 rounded border border-red-200">
+                            <div className="flex items-center space-x-2">
+                              <svg className="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
+                              </svg>
+                              <span>此指令需要必填参数，请填写相关内容</span>
+                            </div>
+                          </div>
+                        )}
+
                         <div className="text-xs text-gray-500">
                           提示：支持多行输入，按 Ctrl+Enter (Mac: Cmd+Enter) 快速执行
                         </div>
                       </div>
                     )}
-                    
+
                     {/* 发送按钮 */}
                     {selectedCommand && (
                       <div className="flex justify-end pt-2">
@@ -286,12 +363,12 @@ const FloatingCommand = forwardRef<FloatingCommandRef, FloatingCommandProps>(
                     )}
                   </div>
                 </div>
-                
+
                 {/* 右侧：结果展示区域 */}
-                <div className="w-1/2 p-6">
+                <div className="w-1/2 p-4">
                   <div className="space-y-4">
                     <h4 className="text-sm font-medium text-gray-700">执行结果</h4>
-                    
+
                     {/* 加载状态 */}
                     {isLoading && (
                       <div className="flex items-center justify-center p-4 text-gray-500">
@@ -301,7 +378,7 @@ const FloatingCommand = forwardRef<FloatingCommandRef, FloatingCommandProps>(
                         </div>
                       </div>
                     )}
-                    
+
                     {/* 执行结果 */}
                     {result && !isLoading && (
                       <div className="p-3 bg-gray-50 border border-gray-200 rounded">
@@ -320,16 +397,11 @@ const FloatingCommand = forwardRef<FloatingCommandRef, FloatingCommandProps>(
                         </div>
                       </div>
                     )}
-                    
-                    {/* 错误信息 */}
+
+                    {/* 执行错误信息 - 只有在指令执行失败时才显示 */}
                     {error && !isLoading && (
                       <div className="p-3 bg-red-50 border border-red-200 rounded">
-                        <div className="flex items-start space-x-2">
-                          <div className="w-4 h-4 bg-red-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                            <svg className="w-2 h-2 text-white" fill="currentColor" viewBox="0 0 20 20">
-                              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-                            </svg>
-                          </div>
+                        <div className="flex items-start">
                           <div className="flex-1">
                             <h4 className="text-sm font-medium text-red-800 mb-1">执行失败</h4>
                             <div className="text-red-700 text-sm bg-white p-3 rounded border border-red-200">
@@ -339,7 +411,7 @@ const FloatingCommand = forwardRef<FloatingCommandRef, FloatingCommandProps>(
                         </div>
                       </div>
                     )}
-                    
+
                     {/* 默认状态 */}
                     {!isLoading && !result && !error && (
                       <div className="flex items-center justify-center p-8 text-gray-400">
@@ -354,11 +426,16 @@ const FloatingCommand = forwardRef<FloatingCommandRef, FloatingCommandProps>(
                   </div>
                 </div>
               </div>
-              
+
               {/* 底部状态栏 */}
               <div className="px-6 py-3 border-t border-gray-200 bg-gray-50">
                 <div className="flex items-center justify-between text-xs text-gray-500">
-                  <span>可用指令: {Array.from(commandsRef.current.keys()).length} 个</span>
+                  <span>
+                    可用指令:
+                    {Array.from(commandsRef.current.keys()).length}
+                    {' '}
+                    个
+                  </span>
                   <div className="flex items-center space-x-4">
                     <span>Ctrl+Enter 执行</span>
                     <span>ESC 关闭</span>
@@ -370,7 +447,7 @@ const FloatingCommand = forwardRef<FloatingCommandRef, FloatingCommandProps>(
         )}
       </>
     )
-  }
+  },
 )
 
 FloatingCommand.displayName = 'FloatingCommand'

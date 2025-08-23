@@ -1,3 +1,5 @@
+import type { SocialMedia } from '@components/Socials/socialIcons'
+
 export interface Site {
   website: string
   author: string
@@ -14,31 +16,3 @@ export type SocialObjects = Array<{
   active: boolean
   linkTitle: string
 }>
-
-export type SocialIcons = {
-  [social in SocialMedia]: string;
-}
-
-export type SocialMedia
-  = | 'Github'
-    | 'Facebook'
-    | 'Instagram'
-    | 'LinkedIn'
-    | 'Mail'
-    | 'Twitter'
-    | 'Twitch'
-    | 'YouTube'
-    | 'WhatsApp'
-    | 'Snapchat'
-    | 'Pinterest'
-    | 'TikTok'
-    | 'CodePen'
-    | 'Discord'
-    | 'GitLab'
-    | 'Reddit'
-    | 'Skype'
-    | 'Steam'
-    | 'Telegram'
-    | 'Mastodon'
-    | 'bilibili'
-    | 'leetcode'

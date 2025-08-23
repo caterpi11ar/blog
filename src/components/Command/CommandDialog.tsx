@@ -1,10 +1,17 @@
-import React, { useState, useRef, useImperativeHandle, forwardRef } from 'react'
+import type { KeyboardEvent } from 'react'
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
 
-// 指令定义接口
 export interface Command {
-  name: string // 指令名称（不含@）
-  description: string // 指令描述
-  handler: (args: string[]) => Promise<string> // 处理函数，返回执行结果
+  /** 指令名称 */
+  name: string
+  /** 指令描述 */
+  description: string
+
+  /** 参数是否为必填 */
+  required?: boolean
+
+  /** 处理函数，返回执行结果 */
+  handler: (args: string[]) => Promise<string>
 }
 
 // 组件属性接口
@@ -22,23 +29,23 @@ export interface CommandDialogRef {
 }
 
 const CommandDialog = forwardRef<CommandDialogRef, CommandDialogProps>(
-  ({ initialCommands = [], placeholder = "输入@指令，如 @time", className = "" }, ref) => {
+  ({ initialCommands = [], placeholder = '输入@指令，如 @time', className = '' }, ref) => {
     // 状态管理
     const [inputValue, setInputValue] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const [result, setResult] = useState<string | null>(null)
     const [error, setError] = useState<string | null>(null)
-    
+
     // 指令存储
     const commandsRef = useRef<Map<string, Command>>(new Map())
-    
+
     // 初始化指令
-    React.useEffect(() => {
-      initialCommands.forEach(command => {
+    useEffect(() => {
+      initialCommands.forEach((command) => {
         commandsRef.current.set(command.name, command)
       })
     }, [initialCommands])
-    
+
     // 暴露方法给父组件
     useImperativeHandle(ref, () => ({
       registerCommand: (command: Command) => {
@@ -49,70 +56,75 @@ const CommandDialog = forwardRef<CommandDialogRef, CommandDialogProps>(
       },
       getAvailableCommands: () => {
         return Array.from(commandsRef.current.keys())
-      }
+      },
     }))
-    
+
     // 解析指令输入
-    const parseCommand = (input: string): { command: string; args: string[] } | null => {
+    const parseCommand = (input: string): { command: string, args: string[] } | null => {
       const trimmed = input.trim()
-      if (!trimmed.startsWith('@')) return null
-      
+      if (!trimmed.startsWith('@'))
+        return null
+
       const parts = trimmed.slice(1).split(/\s+/)
       const command = parts[0]
       const args = parts.slice(1)
-      
+
       return { command, args }
     }
-    
+
     // 执行指令
     const executeCommand = async (commandName: string, args: string[]) => {
       const command = commandsRef.current.get(commandName)
       if (!command) {
         throw new Error(`未知指令: @${commandName}`)
       }
-      
+
       try {
         const result = await command.handler(args)
         return result
-      } catch (error) {
+      }
+      catch (error) {
         throw new Error(`执行指令 @${commandName} 时出错: ${error instanceof Error ? error.message : '未知错误'}`)
       }
     }
-    
+
     // 处理发送
     const handleSend = async () => {
-      if (!inputValue.trim()) return
-      
+      if (!inputValue.trim())
+        return
+
       const parsed = parseCommand(inputValue)
       if (!parsed) {
         setError('请输入以@开头的指令')
         setResult(null)
         return
       }
-      
+
       setIsLoading(true)
       setError(null)
       setResult(null)
-      
+
       try {
         const result = await executeCommand(parsed.command, parsed.args)
         setResult(result)
         setInputValue('') // 清空输入
-      } catch (error) {
+      }
+      catch (error) {
         setError(error instanceof Error ? error.message : '执行失败')
-      } finally {
+      }
+      finally {
         setIsLoading(false)
       }
     }
-    
+
     // 处理键盘事件
-    const handleKeyDown = (e: React.KeyboardEvent) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Enter' && !e.shiftKey) {
         e.preventDefault()
         handleSend()
       }
     }
-    
+
     return (
       <div className={`max-w-2xl mx-auto p-4 space-y-4 ${className}`}>
         {/* 输入区域 */}
@@ -120,7 +132,7 @@ const CommandDialog = forwardRef<CommandDialogRef, CommandDialogProps>(
           <input
             type="text"
             value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
+            onChange={e => setInputValue(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder={placeholder}
             className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
@@ -134,7 +146,7 @@ const CommandDialog = forwardRef<CommandDialogRef, CommandDialogProps>(
             {isLoading ? '执行中...' : '发送'}
           </button>
         </div>
-        
+
         {/* 结果展示区域 */}
         <div className="min-h-[100px]">
           {/* 加载状态 */}
@@ -144,7 +156,7 @@ const CommandDialog = forwardRef<CommandDialogRef, CommandDialogProps>(
               <span className="ml-2">正在执行指令...</span>
             </div>
           )}
-          
+
           {/* 执行结果 */}
           {result && !isLoading && (
             <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
@@ -152,7 +164,7 @@ const CommandDialog = forwardRef<CommandDialogRef, CommandDialogProps>(
               <div className="text-green-700 whitespace-pre-wrap">{result}</div>
             </div>
           )}
-          
+
           {/* 错误信息 */}
           {error && !isLoading && (
             <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
@@ -161,14 +173,16 @@ const CommandDialog = forwardRef<CommandDialogRef, CommandDialogProps>(
             </div>
           )}
         </div>
-        
+
         {/* 可用指令提示 */}
         <div className="text-xs text-gray-500">
-          可用指令: {Array.from(commandsRef.current.keys()).map(name => `@${name}`).join(', ')}
+          可用指令:
+          {' '}
+          {Array.from(commandsRef.current.keys()).map(name => `@${name}`).join(', ')}
         </div>
       </div>
     )
-  }
+  },
 )
 
 CommandDialog.displayName = 'CommandDialog'

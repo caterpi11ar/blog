@@ -10,7 +10,7 @@ export interface Props {
 const { activeNav } = Astro.props
 ---
 
-<header>
+<header class="fixed top-0 left-0 right-0 z-40 bg-skin-base/80 backdrop-blur-sm">
   <a id="skip-to-content" href="#main-content">Skip to content</a>
   <div class="nav-container">
     <div class="top-nav-wrap">
@@ -124,10 +124,10 @@ const { activeNav } = Astro.props
     @apply absolute -top-full left-16 z-50 bg-skin-accent px-3 py-2 text-skin-inverted transition-all focus:top-4;
   }
   .nav-container {
-    @apply mx-auto flex max-w-3xl flex-col items-center justify-between sm:flex-row;
+    @apply mx-auto flex max-w-3xl flex-col items-center justify-between h-14 sm:flex-row;
   }
   .top-nav-wrap {
-    @apply relative flex w-full items-start justify-between p-4 sm:items-center sm:py-8;
+    @apply relative flex w-full items-start justify-between p-2 sm:items-center sm:py-2;
   }
   .logo {
     @apply absolute py-1 text-xl font-semibold sm:static sm:text-2xl;

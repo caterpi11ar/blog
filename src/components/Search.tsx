@@ -1,4 +1,5 @@
 import type { CollectionEntry } from 'astro:content'
+import type { FormEvent } from 'react'
 import Card from '@components/Card'
 import slugify from '@utils/slugify'
 import Fuse from 'fuse.js'
@@ -26,7 +27,7 @@ export default function SearchBar({ searchList }: Props) {
     null,
   )
 
-  const handleChange = (e: React.FormEvent<HTMLInputElement>) => {
+  const handleChange = (e: FormEvent<HTMLInputElement>) => {
     setInputVal(e.currentTarget.value)
   }
 

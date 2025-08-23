@@ -26,7 +26,7 @@
 ### CommandDialog 传统对话框
 
 ```tsx
-import { CommandDialog, Command } from '@/components/Command'
+import { Command, CommandDialog } from '@/components/Command'
 
 // 定义指令
 const commands: Command[] = [
@@ -53,7 +53,7 @@ function App() {
 ### FloatingCommand 悬浮球组件
 
 ```tsx
-import { FloatingCommand, Command } from '@/components/Command'
+import { Command, FloatingCommand } from '@/components/Command'
 
 const commands: Command[] = [
   {
@@ -102,9 +102,9 @@ function App() {
 
 ```tsx
 interface Command {
-  name: string           // 指令名称（不含@）
-  description: string    // 指令描述
-  handler: (args: string[]) => Promise<string>  // 处理函数
+  name: string // 指令名称（不含@）
+  description: string // 指令描述
+  handler: (args: string[]) => Promise<string> // 处理函数
 }
 ```
 
@@ -114,9 +114,9 @@ interface Command {
 
 ```tsx
 interface CommandDialogRef {
-  registerCommand: (command: Command) => void    // 注册新指令
-  unregisterCommand: (name: string) => void     // 注销指令
-  getAvailableCommands: () => string[]          // 获取所有可用指令名称
+  registerCommand: (command: Command) => void // 注册新指令
+  unregisterCommand: (name: string) => void // 注销指令
+  getAvailableCommands: () => string[] // 获取所有可用指令名称
 }
 ```
 
@@ -126,11 +126,11 @@ interface CommandDialogRef {
 
 ```tsx
 interface FloatingCommandRef {
-  registerCommand: (command: Command) => void    // 注册新指令
-  unregisterCommand: (name: string) => void     // 注销指令
-  getAvailableCommands: () => string[]          // 获取所有可用指令名称
-  openDialog: () => void                        // 打开对话框
-  closeDialog: () => void                       // 关闭对话框
+  registerCommand: (command: Command) => void // 注册新指令
+  unregisterCommand: (name: string) => void // 注销指令
+  getAvailableCommands: () => string[] // 获取所有可用指令名称
+  openDialog: () => void // 打开对话框
+  closeDialog: () => void // 关闭对话框
 }
 ```
 
@@ -144,7 +144,7 @@ import { CommandDialog, CommandDialogRef } from '@/components/Command'
 
 function App() {
   const commandRef = useRef<CommandDialogRef>(null)
-  
+
   const addNewCommand = () => {
     commandRef.current?.registerCommand({
       name: 'greet',
@@ -155,7 +155,7 @@ function App() {
       }
     })
   }
-  
+
   return (
     <div>
       <button onClick={addNewCommand}>添加问候指令</button>
@@ -175,11 +175,11 @@ const calcCommand: Command = {
     if (args.length < 3) {
       throw new Error('用法: @calc 数字 运算符 数字')
     }
-    
+
     const [a, op, b] = args
-    const num1 = parseFloat(a)
-    const num2 = parseFloat(b)
-    
+    const num1 = Number.parseFloat(a)
+    const num2 = Number.parseFloat(b)
+
     switch (op) {
       case '+': return `${num1 + num2}`
       case '-': return `${num1 - num2}`

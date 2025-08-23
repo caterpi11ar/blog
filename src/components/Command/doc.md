@@ -73,7 +73,7 @@ interface CommandDialogProps {
 
 ```typescript
 // 组件定义
-const CommandDialog: React.FC<CommandDialogProps> = (props) => {
+const CommandDialog: FC<CommandDialogProps> = (props) => {
   // 组件实现
 }
 

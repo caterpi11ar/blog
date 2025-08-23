@@ -2,7 +2,7 @@
 
 import type { FC } from 'react'
 import useTheme from 'hooks/useTheme'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef } from 'react'
 
 // 外部脚本属性类型
 type ScriptAttributes = Record<string, string>

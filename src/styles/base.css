@@ -2,6 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: 'Inconsolata';
+  src: url(/assets/Inconsolata.ttf) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 @layer base {
   html[data-theme="dark"] .background {
     animation: slide 8s linear infinite;
@@ -26,7 +33,7 @@
   :root,
   html[data-theme="light"] {
     --color-fill: 251, 254, 251;
-    --color-text-base: 40, 39, 40;
+    --color-text-base: #1d1d1f;
     --color-accent: 0, 108, 172;
     --color-card: 230, 230, 230;
     --color-card-muted: 205, 205, 205;

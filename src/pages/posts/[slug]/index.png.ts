@@ -16,6 +16,8 @@ export async function getStaticPaths() {
 }
 
 export const GET: APIRoute = async ({ props }) =>
+  // eslint-disable-next-line ts/ban-ts-comment
+  // @ts-ignore
   new Response(await generateOgImageForPost(props as CollectionEntry<'blog'>), {
     headers: { 'Content-Type': 'image/png' },
   })

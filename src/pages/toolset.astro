@@ -1,16 +1,15 @@
 ---
-import Layout from "@layouts/Layout.astro";
-import Footer from "@components/Footer.astro";
-import Header from "@components/Header.astro";
-import Breadcrumbs from "@components/Breadcrumbs.astro";
-import { SITE } from "@config";
-import Main from "@layouts/Main.astro";
+import Footer from '@components/Footer.astro'
+import Header from '@components/Header.astro'
+import { SITE } from '@config'
+import Layout from '@layouts/Layout.astro'
+import Main from '@layouts/Main.astro'
 
 const toolset = [
   {
-    name: "Git Commit",
-    description: "Generate a commit message for your changes",
-    link: "/toolset/gitcommit",
+    name: 'Git Commit',
+    description: 'Generate a commit message for your changes',
+    link: '/toolset/gitcommit',
   },
 ];
 ---
@@ -42,7 +41,7 @@ const toolset = [
                 </div>
               </>
             </a>
-          );
+          )
         })
       }
     </ul>

@@ -1,0 +1,12 @@
+---
+// 导入React组件
+import FloatingCommandReact from './FloatingCommand'
+import { demoCommands } from './demoCommands'
+---
+
+<!-- 使用client:load指令来在客户端渲染React组件 -->
+<FloatingCommandReact 
+  client:load
+  initialCommands={demoCommands}
+  position="bottom-right"
+/>

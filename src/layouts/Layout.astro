@@ -2,6 +2,7 @@
 import { LOCALE, SITE } from '@config'
 import { ViewTransitions } from 'astro:transitions'
 import '@styles/base.css'
+import FloatingCommand from '@components/Command/FloatingCommand.astro'
 
 const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION
 
@@ -105,6 +106,7 @@ const socialImageURL = new URL(
     <script is:inline src="/toggle-theme.js"></script>
   </head>
   <body>
+    <FloatingCommand />
     <div class="background"></div>
     <slot />
   </body>

@@ -6,7 +6,7 @@ import { defineConfig } from 'astro/config'
 import rehypeMathjax from 'rehype-mathjax'
 import remarkCollapse from 'remark-collapse'
 import remarkMath from 'remark-math'
-import remarkToc from 'remark-toc' // 目录
+import remarkToc from 'remark-toc'
 import { SITE } from './src/config'
 
 // https://astro.build/config

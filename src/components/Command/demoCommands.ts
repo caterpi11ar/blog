@@ -1,4 +1,4 @@
-import type { Command } from './FloatingCommand'
+import type { Command } from './types'
 
 // 示例指令定义
 export const demoCommands: Command[] = [

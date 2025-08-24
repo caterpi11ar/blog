@@ -95,7 +95,6 @@ const FloatingCommand = forwardRef<FloatingCommandRef, FloatingCommandProps>(
       setResult(null)
 
       try {
-        console.log('执行指令', selectedCommand, args)
         const result = await executeCommand(selectedCommand, args)
         setResult(result)
         setCommandArgs('') // 清空输入

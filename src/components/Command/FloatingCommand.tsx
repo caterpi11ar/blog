@@ -1,6 +1,19 @@
 import type { KeyboardEvent } from 'react'
-import type { Command } from './CommandDialog'
 import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react'
+import { demoCommands } from './demoCommands'
+
+export interface Command {
+  /** 指令名称 */
+  name: string
+  /** 指令描述 */
+  description: string
+
+  /** 参数是否为必填 */
+  required?: boolean
+
+  /** 处理函数，返回执行结果 */
+  handler: (args: string[]) => Promise<string>
+}
 
 // 悬浮球属性接口
 export interface FloatingCommandProps {
@@ -28,7 +41,7 @@ const positionStyles = {
 
 const FloatingCommand = forwardRef<FloatingCommandRef, FloatingCommandProps>(
   ({
-    initialCommands = [],
+    initialCommands = demoCommands,
     className = '',
     position = 'bottom-right',
   }, ref) => {
@@ -47,22 +60,11 @@ const FloatingCommand = forwardRef<FloatingCommandRef, FloatingCommandProps>(
 
     // 初始化指令
     useEffect(() => {
+      console.log('初始化指令', initialCommands)
       initialCommands.forEach((command) => {
         commandsRef.current.set(command.name, command)
       })
     }, [initialCommands])
-
-    // 监听点击外部关闭菜单
-    useEffect(() => {
-      const handleClickOutside = (e: MouseEvent) => {
-        if (showCommandMenu && !(e.target as Element).closest('.command-search-container')) {
-          setShowCommandMenu(false)
-        }
-      }
-
-      document.addEventListener('mousedown', handleClickOutside)
-      return () => document.removeEventListener('mousedown', handleClickOutside)
-    }, [showCommandMenu])
 
     // 暴露方法给父组件
     useImperativeHandle(ref, () => ({
@@ -121,6 +123,7 @@ const FloatingCommand = forwardRef<FloatingCommandRef, FloatingCommandProps>(
       setResult(null)
 
       try {
+        console.log('执行指令', selectedCommand, args)
         const result = await executeCommand(selectedCommand, args)
         setResult(result)
         setCommandArgs('') // 清空输入
@@ -382,12 +385,7 @@ const FloatingCommand = forwardRef<FloatingCommandRef, FloatingCommandProps>(
                     {/* 执行结果 */}
                     {result && !isLoading && (
                       <div className="p-3 bg-gray-50 border border-gray-200 rounded">
-                        <div className="flex items-start space-x-2">
-                          <div className="w-4 h-4 bg-gray-600 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                            <svg className="w-2 h-2 text-white" fill="currentColor" viewBox="0 0 20 20">
-                              <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                            </svg>
-                          </div>
+                        <div className="flex items-start">
                           <div className="flex-1">
                             <h4 className="text-sm font-medium text-gray-800 mb-1">执行成功</h4>
                             <div className="text-gray-700 whitespace-pre-wrap text-xs sm:text-sm bg-white p-3 rounded border border-gray-200 max-h-48 sm:max-h-64 overflow-auto">

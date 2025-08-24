@@ -1,4 +1,4 @@
-import type { Command } from './CommandDialog'
+import type { Command } from './FloatingCommand'
 
 // 示例指令定义
 export const demoCommands: Command[] = [

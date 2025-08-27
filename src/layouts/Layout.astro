@@ -1,19 +1,20 @@
 ---
-import FloatingCommand from '@components/Command'
-import { LOCALE, SITE } from '@config'
-import { ViewTransitions } from 'astro:transitions'
-import '@styles/base.css'
+import FloatingCommand from "@components/Command";
+import GoogleAnalytics from "@components/GoogleAnalytics.astro";
+import { LOCALE, SITE } from "@config";
+import { ViewTransitions } from "astro:transitions";
+import "@styles/base.css";
 
-const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION
+const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION;
 
 export interface Props {
-  title?: string
-  author?: string
-  description?: string
-  ogImage?: string
-  canonicalURL?: string
-  pubDatetime?: Date
-  modDatetime?: Date
+  title?: string;
+  author?: string;
+  description?: string;
+  ogImage?: string;
+  canonicalURL?: string;
+  pubDatetime?: Date;
+  modDatetime?: Date;
 }
 
 const {
@@ -24,12 +25,12 @@ const {
   canonicalURL = new URL(Astro.url.pathname, Astro.site).href,
   pubDatetime,
   modDatetime,
-} = Astro.props
+} = Astro.props;
 
 const socialImageURL = new URL(
-  ogImage ?? SITE.ogImage ?? 'og.png',
+  ogImage ?? SITE.ogImage ?? "og.png",
   Astro.url.origin,
-).href
+).href;
 ---
 
 <!doctype html>
@@ -100,6 +101,8 @@ const socialImageURL = new URL(
         />
       )
     }
+
+    <GoogleAnalytics />
 
     <ViewTransitions />
 

@@ -1,0 +1,13 @@
+---
+// Google Analytics component
+const GA_TRACKING_ID = 'G-0M8C71QELX';
+---
+
+<!-- Google Analytics -->
+<script is:inline src={`https://www.googletagmanager.com/gtag/js?id=${GA_TRACKING_ID}`}></script>
+<script is:inline define:vars={{ GA_TRACKING_ID }}>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', GA_TRACKING_ID);
+</script>

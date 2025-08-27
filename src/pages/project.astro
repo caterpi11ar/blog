@@ -5,39 +5,40 @@ import { SITE } from '@config'
 import Layout from '@layouts/Layout.astro'
 import Main from '@layouts/Main.astro'
 
-const toolset = [
+const project = [
   {
-    name: 'Git Commit',
-    description: 'Generate a commit message for your changes',
-    link: '/toolset/gitcommit',
+    name: 'Galaxy',
+    description: 'Galaxy 是一款创新的多人在线互动像素风格小游戏，玩家在一个共享的宇宙中绘制、管理和竞争自己的星球。游戏采用实时互动机制，让玩家体验星球间的区域级竞争与协作。',
+    link: 'https://galaxy.caterpillar-soft.com/',
   },
 ];
 ---
 
-<Layout title={`Toolset | ${SITE.title}`}>
-  <Header activeNav="toolset" />
-  <Main pageTitle="Toolset" pageDesc="All the tools used in toolset.">
+<Layout title={`Project | ${SITE.title}`}>
+  <Header activeNav="project" />
+  <Main pageTitle="Project" pageDesc="All the projects.">
     <ul>
       {
-        toolset.map((tool) => {
+        project.map((project) => {
           return (
             <a
-              href={tool.link}
+              href={project.link}
+              target="_blank"
               class="flex flex-col rounded-lg border border-gray-200 p-4 transition hover:border-[#006cac] hover:shadow-md dark:border-gray-700"
             >
               <>
                 <div class="flex-1">
                   <>
                     <div class="text-xl font-semibold">
-                      {tool.name}
+                      {project.name}
                     </div>
                     <div class="mt-2 text-sm text-gray-600 dark:text-gray-400">
-                      <p class="mb-1">{tool.description}</p>
+                      <p class="mb-1">{project.description}</p>
                     </div>
                   </>
                 </div>
                 <div class="mt-3 text-sm font-medium text-[#006cac]">
-                  View documentation →
+                  View →
                 </div>
               </>
             </a>

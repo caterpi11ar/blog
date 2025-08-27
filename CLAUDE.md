@@ -2,70 +2,76 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
-## Common Development Commands
+## Project Overview
 
-### Development Server
-```bash
-pnpm dev          # Start development server
-pnpm start        # Alternative start command
-pnpm preview      # Preview production build locally
-```
+This is a personal technical blog built with Astro 3.6.4, featuring a modern, responsive design with TypeScript and React components. The blog supports MDX content, math formulas, dark/light themes, and includes a Giscus comment system based on GitHub Discussions.
 
-### Build and Production
-```bash
-pnpm build        # Build for production
-pnpm sync         # Sync Astro content collections
-```
+## Development Commands
 
-### Code Quality
-```bash
-pnpm typecheck    # Run TypeScript type checking
-pnpm lint:fix     # Fix linting issues with ESLint
-```
+- `pnpm dev` or `pnpm start` - Start development server
+- `pnpm build` - Build for production
+- `pnpm preview` - Preview production build
+- `pnpm typecheck` - Run TypeScript type checking
+- `pnpm lint:fix` - Run ESLint with auto-fix
+- `pnpm cz` - Use Commitizen for conventional commits
 
-### Git Workflow
-- Pre-commit hooks automatically run: `pnpm typecheck` and `lint-staged`
-- Use `pnpm cz` for conventional commits with Commitizen
+## Pre-commit Hooks
 
-## Architecture Overview
+The project uses simple-git-hooks with the following workflow:
+1. `pnpm i --frozen-lockfile --ignore-scripts --offline` - Install dependencies
+2. `pnpm typecheck` - Type checking
+3. `npx lint-staged` - Lint staged files
 
-This is an Astro-based blog with the following key architectural patterns:
+Always ensure TypeScript compilation passes and linting is clean before committing.
 
-### Content Management
-- **Content Collections**: Blog posts stored in `src/content/blog/` with TypeScript schema validation
-- **Frontmatter**: Each post uses YAML frontmatter with title, author, pubDatetime, tags, description, featured, draft fields
-- **Categories**: Posts organized in subdirectories (ai/, interview/, project/, python/, react/)
+## Architecture
 
-### Component Architecture
-- **Astro Components**: Server-side rendered components (.astro files) for layouts, static UI
-- **React Components**: Client-side interactive components (.tsx files) for search, theme toggle, command palette, Giscus comments
-- **Hybrid Rendering**: Combines static generation with selective hydration for interactive features
-
-### Styling and Theme System
-- **Tailwind CSS**: Utility-first CSS framework with custom configuration
-- **Dark/Light Mode**: Theme switching handled by `useTheme.tsx` hook with localStorage persistence
-- **Typography**: Tailwind typography plugin for rich markdown content
+### Core Structure
+- **Content Management**: Blog posts in `src/content/blog/` using MDX/Markdown
+- **Components**: React components in `src/components/` for UI elements
+- **Layouts**: Astro layouts in `src/layouts/` for page structure
+- **Pages**: Astro pages in `src/pages/` with dynamic routing
+- **Configuration**: Site config in `src/config.ts`
 
 ### Key Features
-- **Search**: Client-side search using Fuse.js for fuzzy matching
-- **Math Support**: MathJax integration via rehype-mathjax for LaTeX rendering
-- **Table of Contents**: Auto-generated TOC using remark-toc with collapsible sections
-- **SEO**: Built-in Open Graph image generation, sitemap, RSS feed
-- **Command Palette**: Custom command system in `src/components/Command/`
+- **Math Support**: MathJax integration via rehype-mathjax and remark-math
+- **Search**: Client-side search using Fuse.js
+- **Comments**: Giscus integration (requires GitHub Discussions setup)
+- **SEO**: Automatic sitemap, RSS feed, and Open Graph image generation
+- **Styling**: Tailwind CSS with custom base styles disabled
 
-### Content Processing Pipeline
-1. Markdown/MDX files processed through Astro's content collections
-2. Remark plugins: remarkMath, remarkToc, remarkCollapse
-3. Rehype plugins: rehypeMathjax for math rendering
-4. Syntax highlighting with Shiki (one-dark-pro theme)
+### Important Files
+- `astro.config.ts` - Astro configuration with integrations and markdown plugins
+- `src/config.ts` - Site configuration including SITE, LOCALE, and SOCIALS
+- `src/types.ts` - TypeScript type definitions
+- `tailwind.config.cjs` - Tailwind CSS configuration
 
-### File Structure Patterns
-- `src/layouts/`: Page templates and layout components
-- `src/pages/`: File-based routing with dynamic routes for posts and tags  
-- `src/utils/`: Pure utility functions for post sorting, tag extraction, OG image generation
-- `src/components/`: Reusable UI components with clear separation between Astro and React
-- `public/assets/`: Static assets including images and fonts
+## TypeScript Standards
 
-### Environment Configuration
-- Giscus comments system requires environment variables for GitHub Discussions integration
-- Site configuration centralized in `src/config.ts`
+- Use interfaces for object structures, avoid type aliases for objects
+- Avoid `any`, prefer `unknown` when type is uncertain
+- Export all public interfaces and types
+- Use `as const` for literal types and constants
+- Provide JSDoc comments for complex types and functions
+- Ensure zero TypeScript errors or warnings
+
+## Development Guidelines
+
+- Avoid introducing new dependencies without careful consideration of bundle size
+- Use React.memo, useMemo, and useCallback for performance optimization
+- Maintain compatibility with modern browsers
+- Support server-side rendering
+- Avoid breaking changes to maintain backward compatibility
+- Use TypeScript and React for all new components
+
+## Content Structure
+
+Blog posts are organized in `src/content/blog/` with subdirectories for different categories:
+- `interview/` - Interview preparation content
+- `project/` - Project documentation
+- `python/` - Python tutorials
+- `react/` - React-related content
+
+## Package Manager
+
+This project uses **pnpm** exclusively. The preinstall script enforces this with `npx -y only-allow pnpm`.

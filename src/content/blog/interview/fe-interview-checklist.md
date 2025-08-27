@@ -3,7 +3,7 @@ title: 前端面试知识点检查清单
 author: caterpi11ar
 pubDatetime: 2025-08-10T06:00:00
 featured: false
-draft: false
+draft: true
 tags:
   - 面试
   - JavaScript
@@ -110,7 +110,7 @@ description: 前端面试必备知识点检查清单，覆盖 JavaScript、React
   const sparseArray = [1, , 3] // 稀疏数组示例
 
   // 就地移除/替换/添加元素（修改原数组）
-  Arrayplice(start, deleteCount, ...items)
+  Array.splice(start, deleteCount, ...items)
 
   // 返回新数组（不修改原数组），start > end 时返回空数组
   Array.slice(start, end)
@@ -120,6 +120,9 @@ description: 前端面试必备知识点检查清单，覆盖 JavaScript、React
   ```
 
 - [ ] **Function** - 函数类型
+  ```javascript
+
+  ```
 - [ ] **Date** - 日期时间类型
 - [ ] **RegExp** - 正则表达式类型
 - [ ] **Error** - 错误对象类型

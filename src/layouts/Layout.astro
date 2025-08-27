@@ -1,19 +1,17 @@
 ---
-import FloatingCommand from '@components/Command'
-import { LOCALE, SITE } from '@config'
-import { ViewTransitions } from 'astro:transitions'
-import '@styles/base.css'
-
-const googleSiteVerification = import.meta.env.PUBLIC_GOOGLE_SITE_VERIFICATION
+import FloatingCommand from "@components/Command";
+import { LOCALE, SITE } from "@config";
+import { ViewTransitions } from "astro:transitions";
+import "@styles/base.css";
 
 export interface Props {
-  title?: string
-  author?: string
-  description?: string
-  ogImage?: string
-  canonicalURL?: string
-  pubDatetime?: Date
-  modDatetime?: Date
+  title?: string;
+  author?: string;
+  description?: string;
+  ogImage?: string;
+  canonicalURL?: string;
+  pubDatetime?: Date;
+  modDatetime?: Date;
 }
 
 const {
@@ -24,12 +22,12 @@ const {
   canonicalURL = new URL(Astro.url.pathname, Astro.site).href,
   pubDatetime,
   modDatetime,
-} = Astro.props
+} = Astro.props;
 
 const socialImageURL = new URL(
-  ogImage ?? SITE.ogImage ?? 'og.png',
+  ogImage ?? SITE.ogImage ?? "og.png",
   Astro.url.origin,
-).href
+).href;
 ---
 
 <!doctype html>
@@ -88,18 +86,6 @@ const socialImageURL = new URL(
     />
 
     <meta name="theme-color" content="" />
-
-    {
-      // If PUBLIC_GOOGLE_SITE_VERIFICATION is set in the environment variable,
-      // include google-site-verification tag in the heading
-      // Learn more: https://support.google.com/webmasters/answer/9008080#meta_tag_verification&zippy=%2Chtml-tag
-      googleSiteVerification && (
-        <meta
-          name="google-site-verification"
-          content={googleSiteVerification}
-        />
-      )
-    }
 
     <ViewTransitions />
 

@@ -28,7 +28,7 @@ const project: Project[] = [
 <Layout title={`Project | ${SITE.title}`}>
   <Header activeNav="project" />
   <Main pageTitle="Project" pageDesc="All the projects.">
-    <ul>
+    <ul class="flex flex-col gap-y-4">
       {
         project.map((project) => {
           return (

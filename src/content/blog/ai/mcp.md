@@ -176,10 +176,201 @@ MCP 基于 JSON-RPC 2.0 协议，这是一种轻量级的远程过程调用协�
   }
 }
 ```
-提示词是预定义的对话模板：
 
-- `prompts/list`: 列出所有可用提示词
-- `prompts/get`: 获取特定提示词内容
+### TypeScript 实现示例
+
+下面是一个简洁的MCP客户端和服务端实现示例：
+
+```typescript
+/**
+ * MCP 核心类型定义
+ */
+interface JsonRpcRequest {
+  /** JSON-RPC 协议版本 */
+  jsonrpc: "2.0";
+  /** 请求唯一标识符 */
+  id: string | number;
+  /** 调用方法名 */
+  method: string;
+  /** 方法参数 */
+  params?: Record<string, unknown>;
+}
+
+/**
+ * MCP 工具定义
+ */
+interface McpTool {
+  /** 工具名称 */
+  name: string;
+  /** 工具描述 */
+  description: string;
+  /** 参数结构定义 */
+  inputSchema: {
+    type: "object";
+    properties: Record<string, { type: string; description: string }>;
+    required?: string[];
+  };
+}
+
+/**
+ * MCP 客户端
+ */
+class McpClient {
+  /** 请求ID计数器 */
+  private requestId = 0;
+
+  /**
+   * 发送请求到服务器
+   * @param method - 方法名
+   * @param params - 参数
+   * @returns 响应结果
+   */
+  async request(method: string, params?: Record<string, unknown>): Promise<any> {
+    const request: JsonRpcRequest = {
+      jsonrpc: "2.0",
+      id: ++this.requestId,
+      method,
+      params
+    };
+    
+    // 实际实现中这里会发送HTTP/WebSocket请求
+    console.log('发送请求:', request);
+    return this.mockResponse(request);
+  }
+
+  /**
+   * 调用MCP工具
+   * @param toolName - 工具名称
+   * @param args - 工具参数
+   */
+  async callTool(toolName: string, args: Record<string, unknown>) {
+    return this.request('tools/call', { name: toolName, arguments: args });
+  }
+
+  /**
+   * 获取工具列表
+   */
+  async listTools() {
+    return this.request('tools/list');
+  }
+
+  /**
+   * 模拟服务器响应
+   */
+  private async mockResponse(request: JsonRpcRequest) {
+    await new Promise(resolve => setTimeout(resolve, 100));
+    return { jsonrpc: "2.0", id: request.id, result: "模拟响应" };
+  }
+}
+
+/**
+ * MCP 服务器
+ */
+class McpServer {
+  /** 工具注册表 */
+  private tools = new Map<string, { 
+    /** 工具定义 */
+    definition: McpTool; 
+    /** 处理函数 */
+    handler: Function 
+  }>();
+
+  /**
+   * 注册工具
+   * @param definition - 工具定义
+   * @param handler - 处理函数
+   */
+  registerTool(definition: McpTool, handler: Function) {
+    this.tools.set(definition.name, { definition, handler });
+  }
+
+  /**
+   * 处理客户端请求
+   * @param request - JSON-RPC请求
+   */
+  async handleRequest(request: JsonRpcRequest) {
+    try {
+      switch (request.method) {
+        case 'tools/list':
+          const tools = Array.from(this.tools.values()).map(t => t.definition);
+          return { jsonrpc: "2.0", id: request.id, result: { tools } };
+          
+        case 'tools/call':
+          const { name, arguments: args } = request.params as any;
+          const tool = this.tools.get(name);
+          if (!tool) throw new Error(`工具不存在: ${name}`);
+          
+          const result = await tool.handler(args);
+          return { jsonrpc: "2.0", id: request.id, result };
+          
+        default:
+          throw new Error(`未知方法: ${request.method}`);
+      }
+    } catch (error: any) {
+      return {
+        jsonrpc: "2.0",
+        id: request.id,
+        error: { code: -32000, message: error.message }
+      };
+    }
+  }
+}
+
+/**
+ * 使用示例
+ */
+async function example() {
+  // 创建服务器并注册工具
+  const server = new McpServer();
+  
+  server.registerTool({
+    name: 'calculate',
+    description: '数学计算工具',
+    inputSchema: {
+      type: 'object',
+      properties: {
+        expression: { type: 'string', description: '数学表达式' }
+      },
+      required: ['expression']
+    }
+  }, async (args: any) => {
+    const result = eval(args.expression); // 生产环境请使用安全的计算库
+    return { content: [{ type: 'text', text: `结果: ${result}` }] };
+  });
+
+  // 创建客户端并调用
+  const client = new McpClient();
+  
+  // 获取工具列表
+  const tools = await client.listTools();
+  console.log('可用工具:', tools);
+  
+  // 调用计算工具
+  const result = await client.callTool('calculate', { expression: '2 + 3 * 4' });
+  console.log('计算结果:', result);
+}
+
+// 运行示例
+example().catch(console.error);
+```
+
+这个简化版本演示了MCP的核心概念：
+
+1. **JSON-RPC协议**：标准化的请求响应格式
+2. **工具系统**：可注册和调用的功能模块  
+3. **类型安全**：完整的TypeScript类型定义
+4. **错误处理**：统一的异常处理机制
+
+### 主要方法说明
+
+**客户端方法**：
+- `request()`: 发送JSON-RPC请求
+- `callTool()`: 调用指定工具
+- `listTools()`: 获取可用工具列表
+
+**服务端方法**：
+- `registerTool()`: 注册新工具
+- `handleRequest()`: 处理客户端请求
 
 ### 传输层选择
 

@@ -18,8 +18,8 @@ description: freedom cli 方案设计 灵感源自 claude code cli
 
 | 命令       | 用途                        |
 | ---------- | --------------------------- |
-| `/login`   | 登录到 freedom 账户         |
-| `/logout`  | 从 freedom 账户登出         |
+| `/login`   | 登录云原神账户         |
+| `/logout`  | 从云原神账户登出         |
 | `/help`    | 获取使用帮助                |
 | `/log`     | 查看系统日志                |
 | `/doctor`  | 检查 freedom 安装的健康状况 |

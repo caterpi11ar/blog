@@ -1,13 +1,13 @@
 ---
-title: AI - MCP 模型上下文协议详解
+title: MCP 模型上下文协议详解
 author: caterpillar
 pubDatetime: 2025-01-27T00:00:00
-featured: true
+featured: false
 draft: false
 tags:
   - AI
   - MCP
-description: 全面深入了解 Anthropic 推出的模型上下文协议 (MCP)，包括架构设计、实现方式、使用场景和最佳实践
+description: Anthropic 推出的模型上下文协议 (MCP)，包括架构设计、实现方式、使用场景和最佳实践
 ---
 
 # MCP (Model Context Protocol) 详解
@@ -450,12 +450,12 @@ MCP 内置多层安全机制，确保 AI 访问外部系统的安全性：
 
 ## 技术对比
 
-| 特性 | MCP | OpenAI Function Calling | LangChain Tools |
-|------|-----|-------------------------|-----------------|
-| 标准化 | 开放协议 | OpenAI 专有 | 框架特定 |
-| 传输方式 | stdio/HTTP/WS | HTTP API | Python 内存 |
-| 安全性 | 内置机制 | API 密钥 | 自实现 |
-| 扩展性 | 高度可扩展 | 受限于 API | 框架内扩展 |
+| 特性     | MCP           | OpenAI Function Calling | LangChain Tools |
+| -------- | ------------- | ----------------------- | --------------- |
+| 标准化   | 开放协议      | OpenAI 专有             | 框架特定        |
+| 传输方式 | stdio/HTTP/WS | HTTP API                | Python 内存     |
+| 安全性   | 内置机制      | API 密钥                | 自实现          |
+| 扩展性   | 高度可扩展    | 受限于 API              | 框架内扩展      |
 
 ## MCP 的优势与未来
 

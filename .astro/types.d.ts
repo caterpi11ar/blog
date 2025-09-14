@@ -185,16 +185,16 @@ declare module 'astro:content' {
 
 	type ContentEntryMap = {
 		"blog": {
-"ai/aicoding001.md": {
-	id: "ai/aicoding001.md";
-  slug: "ai/aicoding001";
+"ai/coding001.md": {
+	id: "ai/coding001.md";
+  slug: "ai/coding001";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ai/aicoding002.md": {
-	id: "ai/aicoding002.md";
-  slug: "ai/aicoding002";
+"ai/coding002.md": {
+	id: "ai/coding002.md";
+  slug: "ai/coding002";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -202,6 +202,13 @@ declare module 'astro:content' {
 "ai/mcp.md": {
 	id: "ai/mcp.md";
   slug: "ai/mcp";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"ai/resource.md": {
+	id: "ai/resource.md";
+  slug: "ai/resource";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">

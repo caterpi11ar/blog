@@ -3,7 +3,7 @@ title: MCP 模型上下文协议详解
 author: caterpillar
 pubDatetime: 2025-01-27T00:00:00
 featured: false
-draft: false
+draft: true
 tags:
   - AI
   - MCP

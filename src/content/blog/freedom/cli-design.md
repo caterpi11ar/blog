@@ -3,7 +3,7 @@ title: freedom cli 方案设计
 author: caterpillar
 pubDatetime: 2025-09-09T00:00:00
 featured: false
-draft: false
+draft: true
 tags:
   - freedom
   - cli

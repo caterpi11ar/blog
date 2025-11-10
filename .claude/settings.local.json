@@ -1,7 +1,15 @@
 {
   "permissions": {
     "allow": [
-      "Bash(pnpm install:*)"
+      "Bash(pnpm install:*)",
+      "Bash(mkdir:*)",
+      "WebFetch(domain:javascript.plainenglish.io)",
+      "Bash(chcp 65001)",
+      "WebSearch",
+      "Bash(cat:*)",
+      "WebFetch(domain:tkdodo.eu)",
+      "Bash(curl:*)",
+      "Bash(nul)"
     ],
     "deny": [],
     "ask": []

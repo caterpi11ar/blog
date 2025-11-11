@@ -262,23 +262,9 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"project/react-filter-component.md": {
-	id: "project/react-filter-component.md";
-  slug: "project/react-filter-component";
-  body: string;
-  collection: "blog";
-  data: InferEntrySchema<"blog">
-} & { render(): Render[".md"] };
 "project/rosbag-engine.md": {
 	id: "project/rosbag-engine.md";
   slug: "project/rosbag-engine";
-  body: string;
-  collection: "blog";
-  data: InferEntrySchema<"blog">
-} & { render(): Render[".md"] };
-"project/studio-platform.md": {
-	id: "project/studio-platform.md";
-  slug: "project/studio-platform";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">

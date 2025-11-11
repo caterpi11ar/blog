@@ -199,6 +199,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"ai/coding003.md": {
+	id: "ai/coding003.md";
+  slug: "ai/coding003";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "ai/mcp.md": {
 	id: "ai/mcp.md";
   slug: "ai/mcp";
@@ -279,6 +286,20 @@ declare module 'astro:content' {
 "python/python001.md": {
 	id: "python/python001.md";
   slug: "python/python001";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"react/prop-drilling.md": {
+	id: "react/prop-drilling.md";
+  slug: "react/prop-drilling";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"react/state-management.md": {
+	id: "react/state-management.md";
+  slug: "react/state-management";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">

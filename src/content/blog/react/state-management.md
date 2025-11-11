@@ -506,58 +506,6 @@ function Component() {
 }
 ```
 
-## 状态管理决策树
-
-如何选择合适的状态管理方案?
-
-```mermaid
-graph TD
-    A[开始: 需要管理状态] --> B{数据来源?}
-
-    B -->|服务器数据| C[React Query]
-    C --> C1[useQuery - 数据获取与缓存]
-    C --> C2[useMutation - 数据修改]
-    C --> C3[useInfiniteQuery - 无限滚动]
-
-    B -->|客户端数据| D{共享范围?}
-
-    D -->|跨组件共享| E{访问范围?}
-
-    E -->|全局访问| F[Zustand]
-    F --> F1[用户认证状态]
-    F --> F2[全局通知系统]
-    F --> F3[应用级 UI 配置]
-    F --> F4[导航历史]
-
-    E -->|组件树局部| G[Context API]
-    G --> G1[表单向导流程]
-    G --> G2[主题/国际化]
-    G --> G3[依赖注入]
-    G --> G4[特定功能模块]
-
-    D -->|组件内部| H{状态复杂度?}
-
-    H -->|简单| I[useState]
-    I --> I1[表单输入]
-    I --> I2[UI 开关]
-    I --> I3[临时数据]
-
-    H -->|复杂逻辑| J[useReducer]
-    J --> J1[多状态联动]
-    J --> J2[复杂状态转换]
-
-    H -->|可复用| K[自定义 Hook]
-    K --> K1[封装业务逻辑]
-    K --> K2[跨组件复用]
-
-    style C fill:#61dafb
-    style F fill:#f5da55
-    style G fill:#58c4dc
-    style I fill:#20232a,color:#fff
-    style J fill:#20232a,color:#fff
-    style K fill:#20232a,color:#fff
-```
-
 ## 常见错误和解决方案
 
 ### 1. 过度使用全局状态

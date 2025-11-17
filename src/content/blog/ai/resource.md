@@ -20,6 +20,8 @@ description: 整理的资源
 - [Figma](https://www.figma.com/)
 - [Sketch](https://www.sketch.com/)
 - [lovable](https://www.lovable.ai/)
+- [v0.dev](https://v0.dev/)
+- [21st](https://21st.dev)
 
 ## 大模型平台
 

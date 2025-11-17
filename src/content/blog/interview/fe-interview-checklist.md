@@ -50,7 +50,7 @@ description: 前端面试必备知识点检查清单，覆盖 JavaScript、React
   str.slice(start, end) // 返回子字符串（不修改原字符串）
 
   // 自动交换 start/end 顺序，end省略则到末尾
-  str.substring(start, end) // 回子字符串（不修改原字符串）
+  str.substring(start, end) // 返回子字符串（不修改原字符串）
   ```
 
 - [x] **Boolean** - 布尔类型
@@ -157,20 +157,20 @@ description: 前端面试必备知识点检查清单，覆盖 JavaScript、React
 - [ ] **类型转换规则**
   ```javascript
   // 隐式转换
-  const result1 = `${1 }2`; // '12' (数字转字符串)
+  const result1 = `${1}2`; // '12' (数字转字符串)
   const result2 = '2' * 3 // 6 (字符串转数字)
   const result3 = 0 == false // true (数字转布尔)
   const result4 = undefined == null // true (特殊情况)
 
   // == vs === 的区别
-  consteq1 = 0ffalse == 0      // true (类型转换)
-  consteq2 = 0ffalse === 0     // false (严格相等)
+  const eq1 = false == 0      // true (类型转换)
+  const eq2 = false === 0     // false (严格相等)
 
   // + 操作符的类型转换
-  constum1 = + 23';  23 (字符串转数字)
-  const num2 = + ue;   (布尔转数字)
-  const num3 = + ll;   (null转数字)
-  const num4 = + defined;  aN (undefined转数字)
+  const num1 = +'23';  // 23 (字符串转数字)
+  const num2 = +true;  // 1 (布尔转数字)
+  const num3 = +null;  // 0 (null转数字)
+  const num4 = +undefined;  // NaN (undefined转数字)
   ```
 
 - [ ] **判断数组的方法**
@@ -179,19 +179,20 @@ description: 前端面试必备知识点检查清单，覆盖 JavaScript、React
   const isArray1 = Array.isArray([])  // true
 
   // 2. instanceof
-  constarr = []]
-  constisArray2 = aArray.isArray(arr)  / true
+  const arr = []
+  const isArray2 = arr instanceof Array  // true
 
   // 3. constructor
-  const isArray3 = [].constructor === ArArray  // true
+  const isArray3 = [].constructor === Array  // true
 
   // 4. Object.prototype.toString
-  constArray4 = Object.prototype.toString.call([]) === '[o'[object Array]'  // true
+  const isArray4 = Object.prototype.toString.call([]) === '[object Array]'  // true
 
   // 5. 鸭子类型判断
-  functionrrayLike(obj) {
-    return obj && typeof obj.length === 'num'number'
-  }`
+  function isArrayLike(obj) {
+    return obj && typeof obj.length === 'number'
+  }
+  ```
 
 - [ ] **null vs undefined**
   ```javascript
@@ -203,15 +204,15 @@ description: 前端面试必备知识点检查清单，覆盖 JavaScript、React
   // obj.nonExistentProperty      // 不存在的属性
 
   // null 的场景
-  letnullValue = nnull            // 明确表示空值
-  JSONstringify({k ey: null} ))     // 序列化时的空值
-  Objectcreate(null))             // 创建无原型对象
+  let nullValue = null            // 明确表示空值
+  JSON.stringify({key: null})     // 序列化时的空值
+  Object.create(null)             // 创建无原型对象
 
   // 区别
-  constypeUndefined = typeof unundefined  // "undefined"
-  constypeNull = typeof nunull            // "object"
-  constq1 = undefined == nunull   // true
-  constq2 = undefined === nunull// false
+  const typeUndefined = typeof undefined  // "undefined"
+  const typeNull = typeof null            // "object"
+  const eq1 = undefined == null   // true
+  const eq2 = undefined === null  // false
   ```
 
 ### [迭代协议](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Iteration_protocols)

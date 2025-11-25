@@ -2,7 +2,8 @@
 title: "React Hooks 源码解析（一）：useState 与 useReducer 的底层实现"
 pubDatetime: 2025-11-24T00:00:00Z
 description: "深入 React 源码，解析 useState 和 useReducer 的实现原理、数据结构和更新机制"
-tags: ["React"]
+tags:
+  - React
 featured: false
 draft: true
 ---

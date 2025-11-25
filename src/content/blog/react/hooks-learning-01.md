@@ -2,7 +2,8 @@
 title: "React Hooks 学习系列 - 学习目录"
 pubDatetime: 2025-11-24T00:00:00Z
 description: "React Hooks 学习系列目录规划与核心 Hooks 清单"
-tags: ["React"]
+tags:
+  - React
 featured: false
 draft: false
 ---

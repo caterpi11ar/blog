@@ -17,7 +17,6 @@ description: 了解如何通过有效的MCP工程技术提高AI编码效率和�
 
 **MCP Engineering**（Model Context Protocol Engineering）代表了AI编码方法论的高级形态——它通过标准化协议让AI能够**主动获取**、**实时更新**、**直接操作**外部系统，解决了前两种方法的局限性。它让AI从"被动接受信息"升级为"主动感知和操作真实世界"的智能助手。
 
-
 ## MCP Engineering的核心优势
 
 MCP Engineering通过标准化协议解决了传统AI编码的根本性局限：

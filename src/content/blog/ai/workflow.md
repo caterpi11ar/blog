@@ -1,6 +1,6 @@
 ---
 title: AI Workflow
-author: caterpillar
+author: caterpi11ar
 pubDatetime: 2026-02-15T00:00:00
 featured: false
 draft: false

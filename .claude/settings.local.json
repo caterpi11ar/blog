@@ -10,7 +10,8 @@
       "WebFetch(domain:tkdodo.eu)",
       "Bash(curl:*)",
       "Bash(nul)",
-      "WebFetch(domain:docs.cheko.cc)"
+      "WebFetch(domain:docs.cheko.cc)",
+      "Bash(xargs sed:*)"
     ],
     "deny": [],
     "ask": []

@@ -1,6 +1,6 @@
 ---
 title: 整理的资源
-author: caterpillar
+author: caterpi11ar
 pubDatetime: 2025-07-24T00:00:00
 featured: false
 draft: false

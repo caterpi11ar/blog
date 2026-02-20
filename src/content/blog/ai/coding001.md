@@ -1,6 +1,6 @@
 ---
 title: AI Coding 方法论：Prompt Engineering
-author: caterpillar
+author: caterpi11ar
 pubDatetime: 2025-09-10T00:00:00
 featured: true
 draft: false

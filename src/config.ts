@@ -1,10 +1,10 @@
 import type { Site, SocialObjects } from './types'
 
 export const SITE: Site = {
-  website: 'https://caterpillar-soft.com', // replace this with your deployed domain
+  website: 'https://caterpi11ar.com',
   author: 'caterpi11ar',
-  desc: 'caterpillar\'s blog',
-  title: 'caterpillar\'s blog',
+  desc: 'caterpi11ar\'s blog',
+  title: 'caterpi11ar\'s blog',
   ogImage: 'astropaper-og.jpg',
   lightAndDarkMode: true,
   postPerPage: 10,

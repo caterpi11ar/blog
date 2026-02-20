@@ -1,6 +1,6 @@
 ---
 title: Python 学习小记
-author: caterpillar
+author: caterpi11ar
 pubDatetime: 2025-07-24T00:00:00
 featured: false
 draft: false

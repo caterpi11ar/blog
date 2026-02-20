@@ -1,6 +1,6 @@
 ---
 title: ROSBag Engine - 浏览器环境 ROSBag 解析引擎
-author: caterpillar
+author: caterpi11ar
 pubDatetime: 2025-08-10T06:00:00
 featured: false
 draft: true

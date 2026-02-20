@@ -1,6 +1,6 @@
 ---
 title: 反对 Prop Drilling
-author: caterpillar
+author: caterpi11ar
 pubDatetime: 2025-10-10T00:00:00
 featured: false
 draft: false

@@ -1,6 +1,6 @@
 ---
 title: 使用pnpm-workspace搭建monorepo项目
-author: caterpillar
+author: caterpi11ar
 pubDatetime: 2024-04-29T00:00:00
 featured: false
 draft: false

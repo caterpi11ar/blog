@@ -1,6 +1,6 @@
 ---
 title: Linux 常用命令
-author: caterpillar
+author: caterpi11ar
 pubDatetime: 2026-02-06T00:00:00
 featured: false
 draft: true

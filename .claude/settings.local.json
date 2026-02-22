@@ -11,7 +11,10 @@
       "Bash(curl:*)",
       "Bash(nul)",
       "WebFetch(domain:docs.cheko.cc)",
-      "Bash(xargs sed:*)"
+      "Bash(xargs sed:*)",
+      "WebFetch(domain:github.com)",
+      "Bash(gh repo:*)",
+      "WebFetch(domain:raw.githubusercontent.com)"
     ],
     "deny": [],
     "ask": []

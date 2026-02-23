@@ -297,6 +297,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"project/spa-to-next.md": {
+	id: "project/spa-to-next.md";
+  slug: "project/spa-to-next";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "python/python001.md": {
 	id: "python/python001.md";
   slug: "python/python001";

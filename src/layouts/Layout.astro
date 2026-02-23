@@ -77,6 +77,15 @@ const socialImageURL = new URL(
     <meta property="twitter:description" content={description} />
     <meta property="twitter:image" content={socialImageURL} />
 
+    <!-- Google Analytics -->
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-RVQWPTZWKW"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-RVQWPTZWKW');
+    </script>
+
     <!-- google-adsense -->
     <meta name="google-adsense-account" content="ca-pub-4002926826632458" />
 

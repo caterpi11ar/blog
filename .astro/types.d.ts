@@ -206,16 +206,16 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ai/mcp.md": {
-	id: "ai/mcp.md";
-  slug: "ai/mcp";
+"ai/resource.md": {
+	id: "ai/resource.md";
+  slug: "ai/resource";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
-"ai/resource.md": {
-	id: "ai/resource.md";
-  slug: "ai/resource";
+"ai/workflow.md": {
+	id: "ai/workflow.md";
+  slug: "ai/workflow";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -255,9 +255,37 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"linux/command.md": {
+	id: "linux/command.md";
+  slug: "linux/command";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "monorepo-001.md": {
 	id: "monorepo-001.md";
   slug: "monorepo-001";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"project/dentic.md": {
+	id: "project/dentic.md";
+  slug: "project/dentic";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"project/locusify.md": {
+	id: "project/locusify.md";
+  slug: "project/locusify";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"project/overseas-payment.md": {
+	id: "project/overseas-payment.md";
+  slug: "project/overseas-payment";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -276,6 +304,20 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"react/hooks-learning-01.md": {
+	id: "react/hooks-learning-01.md";
+  slug: "react/hooks-learning-01";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"react/hooks-learning-02.md": {
+	id: "react/hooks-learning-02.md";
+  slug: "react/hooks-learning-02";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "react/prop-drilling.md": {
 	id: "react/prop-drilling.md";
   slug: "react/prop-drilling";
@@ -286,6 +328,13 @@ declare module 'astro:content' {
 "react/state-management.md": {
 	id: "react/state-management.md";
   slug: "react/state-management";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"ruankao/summary.md": {
+	id: "ruankao/summary.md";
+  slug: "ruankao/summary";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">
@@ -316,7 +365,9 @@ declare module 'astro:content' {
 	};
 
 	type DataEntryMap = {
-		
+		"code": {
+};
+
 	};
 
 	type AnyEntryMap = ContentEntryMap & DataEntryMap;

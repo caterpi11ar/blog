@@ -5,7 +5,7 @@ export const SITE: Site = {
   author: 'caterpi11ar',
   desc: 'caterpi11ar\'s blog',
   title: 'caterpi11ar\'s blog',
-  ogImage: 'astropaper-og.jpg',
+  ogImage: 'https://raw.githubusercontent.com/caterpi11ar/assets/main/logo/caterpi11ar.jpg',
   lightAndDarkMode: true,
   postPerPage: 10,
 }
@@ -17,9 +17,9 @@ export const LOCALE = {
 
 export const LOGO_IMAGE = {
   enable: false,
-  svg: true,
-  width: 216,
-  height: 46,
+  width: 40,
+  height: 40,
+  file: 'https://raw.githubusercontent.com/caterpi11ar/assets/main/logo/caterpi11ar.jpg',
 }
 
 export const SOCIALS: SocialObjects = [

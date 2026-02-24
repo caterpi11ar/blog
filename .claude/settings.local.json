@@ -17,7 +17,10 @@
       "WebFetch(domain:raw.githubusercontent.com)",
       "Bash(git add:*)",
       "WebFetch(domain:skills.sh)",
-      "WebFetch(domain:www.semrush.com)"
+      "WebFetch(domain:www.semrush.com)",
+      "WebFetch(domain:caterpi11ar.com)",
+      "Bash(pnpm typecheck:*)",
+      "Bash(git:*)"
     ],
     "deny": [],
     "ask": []

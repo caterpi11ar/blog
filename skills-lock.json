@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "skills": {
+    "caterpi11ar-assets": {
+      "source": "caterpi11ar/assets",
+      "sourceType": "github",
+      "computedHash": "86334b9385adbb5e63f4574efc743dc0c616cb3de94463a0257cb75940be785a"
+    }
+  }
+}

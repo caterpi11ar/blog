@@ -18,10 +18,11 @@ const { activeNav } = Astro.props
         {
           LOGO_IMAGE.enable ? (
             <img
-              src={`/assets/${LOGO_IMAGE.svg ? 'logo.svg' : 'logo.png'}`}
+              src={LOGO_IMAGE.file}
               alt={SITE.title}
               width={LOGO_IMAGE.width}
               height={LOGO_IMAGE.height}
+              class="rounded-full object-cover"
             />
           ) : (SITE.title)
         }

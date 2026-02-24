@@ -1,5 +1,4 @@
 ---
-import FloatingCommand from '@components/Command'
 import { LOCALE, SITE } from '@config'
 import { ViewTransitions } from 'astro:transitions'
 import '@styles/base.css'
@@ -107,8 +106,7 @@ const socialImageURL = new URL(
     <script is:inline src="/toggle-theme.js"></script>
   </head>
   <body class="pt-14">
-    <FloatingCommand client:load />
-    <div class="background"></div>
+<div class="background"></div>
     <slot />
   </body>
 </html>

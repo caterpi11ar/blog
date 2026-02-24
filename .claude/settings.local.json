@@ -15,7 +15,9 @@
       "WebFetch(domain:github.com)",
       "Bash(gh repo:*)",
       "WebFetch(domain:raw.githubusercontent.com)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "WebFetch(domain:skills.sh)",
+      "WebFetch(domain:www.semrush.com)"
     ],
     "deny": [],
     "ask": []

@@ -346,6 +346,20 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"seo-aeo-geo.md": {
+	id: "seo-aeo-geo.md";
+  slug: "seo-aeo-geo";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"seo-technical-basics.md": {
+	id: "seo-technical-basics.md";
+  slug: "seo-technical-basics";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "test.md": {
 	id: "test.md";
   slug: "test";

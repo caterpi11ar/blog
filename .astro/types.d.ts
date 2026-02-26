@@ -269,6 +269,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"project/ai-system-prompts.md": {
+	id: "project/ai-system-prompts.md";
+  slug: "project/ai-system-prompts";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "project/dentic.md": {
 	id: "project/dentic.md";
   slug: "project/dentic";

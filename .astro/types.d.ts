@@ -283,6 +283,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"project/locusify-overseas-playbook.md": {
+	id: "project/locusify-overseas-playbook.md";
+  slug: "project/locusify-overseas-playbook";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "project/locusify.md": {
 	id: "project/locusify.md";
   slug: "project/locusify";
@@ -384,6 +391,13 @@ declare module 'astro:content' {
 "ts-001.md": {
 	id: "ts-001.md";
   slug: "ts-001";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
+"user-growth-cold-start.md": {
+	id: "user-growth-cold-start.md";
+  slug: "user-growth-cold-start";
   body: string;
   collection: "blog";
   data: InferEntrySchema<"blog">

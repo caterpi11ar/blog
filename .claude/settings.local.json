@@ -20,7 +20,9 @@
       "WebFetch(domain:www.semrush.com)",
       "WebFetch(domain:caterpi11ar.com)",
       "Bash(pnpm typecheck:*)",
-      "Bash(git:*)"
+      "Bash(git:*)",
+      "Bash(node -e \"const { slug } = require\\('github-slugger'\\); console.log\\(slug\\('用户增长冷启动：海外 vs 国内渠道打法'\\)\\)\")",
+      "Bash(pkill -f \"astro dev\" 2>/dev/null; pnpm typecheck)"
     ],
     "deny": [],
     "ask": []

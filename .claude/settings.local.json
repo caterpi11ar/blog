@@ -23,7 +23,8 @@
       "Bash(git:*)",
       "Bash(node -e \"const { slug } = require\\('github-slugger'\\); console.log\\(slug\\('用户增长冷启动：海外 vs 国内渠道打法'\\)\\)\")",
       "Bash(pkill -f \"astro dev\" 2>/dev/null; pnpm typecheck)",
-      "WebFetch(domain:v2ex.com)"
+      "WebFetch(domain:v2ex.com)",
+      "Bash(find /Users/qin.dai/.claude/projects -name *.json -path */settings*)"
     ],
     "deny": [],
     "ask": []

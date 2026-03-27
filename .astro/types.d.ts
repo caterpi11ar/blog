@@ -276,6 +276,13 @@ declare module 'astro:content' {
   collection: "blog";
   data: InferEntrySchema<"blog">
 } & { render(): Render[".md"] };
+"project/cc-notify.md": {
+	id: "project/cc-notify.md";
+  slug: "project/cc-notify";
+  body: string;
+  collection: "blog";
+  data: InferEntrySchema<"blog">
+} & { render(): Render[".md"] };
 "project/dentic.md": {
 	id: "project/dentic.md";
   slug: "project/dentic";

@@ -3,7 +3,7 @@ title: 系统分析师考试备考指南
 author: caterpi11ar
 pubDatetime: 2025-11-18T00:00:00
 featured: false
-draft: false
+draft: true
 tags:
   - 软考
   - 系统分析师

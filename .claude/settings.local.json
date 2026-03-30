@@ -24,7 +24,18 @@
       "Bash(node -e \"const { slug } = require\\('github-slugger'\\); console.log\\(slug\\('用户增长冷启动：海外 vs 国内渠道打法'\\)\\)\")",
       "Bash(pkill -f \"astro dev\" 2>/dev/null; pnpm typecheck)",
       "WebFetch(domain:v2ex.com)",
-      "Bash(find /Users/qin.dai/.claude/projects -name *.json -path */settings*)"
+      "Bash(find /Users/qin.dai/.claude/projects -name *.json -path */settings*)",
+      "mcp__context7__resolve-library-id",
+      "mcp__context7__query-docs",
+      "Bash(npx @astrojs/upgrade 2)",
+      "Bash(1:*)",
+      "Bash(pnpm remove:*)",
+      "Bash(pnpm add:*)",
+      "Bash(pnpm ls:*)",
+      "Bash(npm view:*)",
+      "Bash(pnpm build:*)",
+      "Bash(pnpm lint:fix)",
+      "Bash(timeout 15 pnpm dev)"
     ],
     "deny": [],
     "ask": []

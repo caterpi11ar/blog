@@ -7,6 +7,7 @@ import LinkButton from '@components/LinkButton.astro'
 import { SITE } from '@config'
 import Layout from '@layouts/Layout.astro'
 import Main from '@layouts/Main.astro'
+import { cn } from '@utils/cn'
 import slugify from '@utils/slugify'
 
 export interface Props {
@@ -35,14 +36,14 @@ const next = pageNum < totalPages ? '' : 'disabled';
 
   {
     totalPages > 1 && (
-      <nav class="pagination-wrapper" aria-label="Pagination">
+      <nav class="mb-8 mt-auto flex justify-center" aria-label="Pagination">
         <LinkButton
           disabled={prev === 'disabled'}
           href={`/posts${pageNum - 1 !== 1 ? `/${pageNum - 1}` : ''}`}
-          className={`mr-4 select-none ${prev}`}
+          className={cn('mr-4 select-none', prev === 'disabled' && 'pointer-events-none opacity-50 hover:text-skin-text group-hover:fill-skin-text')}
           ariaLabel="Previous"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" class={`${prev}-svg`}>
+          <svg xmlns="http://www.w3.org/2000/svg" class={cn(prev === 'disabled' && 'group-hover:!fill-skin-text')}>
             <path d="M12.707 17.293 8.414 13H18v-2H8.414l4.293-4.293-1.414-1.414L4.586 12l6.707 6.707z" />
           </svg>
           Prev
@@ -50,11 +51,11 @@ const next = pageNum < totalPages ? '' : 'disabled';
         <LinkButton
           disabled={next === 'disabled'}
           href={`/posts/${pageNum + 1}`}
-          className={`ml-4 select-none ${next}`}
+          className={cn('ml-4 select-none', next === 'disabled' && 'pointer-events-none opacity-50 hover:text-skin-text group-hover:fill-skin-text')}
           ariaLabel="Next"
         >
           Next
-          <svg xmlns="http://www.w3.org/2000/svg" class={`${next}-svg`}>
+          <svg xmlns="http://www.w3.org/2000/svg" class={cn(next === 'disabled' && 'group-hover:!fill-skin-text')}>
             <path d="m11.293 17.293 1.414 1.414L19.414 12l-6.707-6.707-1.414 1.414L15.586 11H6v2h9.586z" />
           </svg>
         </LinkButton>
@@ -63,15 +64,3 @@ const next = pageNum < totalPages ? '' : 'disabled';
   }
   <Footer noMarginTop={totalPages > 1} />
 </Layout>
-
-<style>
-  .pagination-wrapper {
-    @apply mb-8 mt-auto flex justify-center;
-  }
-  .disabled {
-    @apply pointer-events-none select-none opacity-50 hover:text-skin-base group-hover:fill-skin-base;
-  }
-  .disabled-svg {
-    @apply group-hover:!fill-skin-base;
-  }
-</style>

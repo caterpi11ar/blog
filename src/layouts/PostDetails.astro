@@ -7,6 +7,7 @@ import Header from '@components/Header.astro'
 import Tag from '@components/Tag.astro'
 import Layout from '@layouts/Layout.astro'
 import { slugifyStr } from '@utils/slugify'
+import { render } from 'astro:content'
 
 export interface Props {
   post: CollectionEntry<'blog'>
@@ -25,7 +26,7 @@ const {
   tags,
 } = post.data
 
-const { Content } = await post.render()
+const { Content } = await render(post)
 
 const ogImageUrl = typeof ogImage === 'string' ? ogImage : ogImage?.src
 const ogUrl = new URL(
@@ -57,8 +58,8 @@ const layoutProps = {
       </svg><span>Go back</span>
     </button>
   </div>
-  <main id="main-content">
-    <h1 transition:name={slugifyStr(title)} class="post-title">{title}</h1>
+  <main id="main-content" class="mx-auto w-full max-w-3xl px-4 pb-12">
+    <h1 transition:name={slugifyStr(title)} class="text-2xl font-semibold text-skin-accent">{title}</h1>
     <Datetime
       pubDatetime={pubDatetime}
       modDatetime={modDatetime}
@@ -95,15 +96,6 @@ const layoutProps = {
   </main>
   <Footer />
 </Layout>
-
-<style>
-  main {
-    @apply mx-auto w-full max-w-3xl px-4 pb-12;
-  }
-  .post-title {
-    @apply text-2xl font-semibold text-skin-accent;
-  }
-</style>
 
 <script is:inline>
 /* When the user clicks on the "Back to Top" button,

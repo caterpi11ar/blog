@@ -1,5 +1,5 @@
 import { LOCALE } from '@config'
-import { clsx } from 'clsx'
+import { cn } from '@utils/cn'
 
 interface DatetimesProps {
   pubDatetime: string | Date
@@ -18,12 +18,12 @@ export default function Datetime({
   className,
 }: Props) {
   return (
-    <div className={clsx('flex items-center space-x-2 opacity-80', className)}>
+    <div className={cn('flex items-center space-x-2 opacity-80', className)}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
-        className={clsx(
+        className={cn(
           size === 'sm' ? 'scale-90' : 'scale-100',
-          'inline-block h-6 w-6 min-w-[1.375rem] fill-skin-base',
+          'inline-block h-6 w-6 min-w-5.5 fill-skin-text',
         )}
         aria-hidden="true"
       >
@@ -31,13 +31,13 @@ export default function Datetime({
         <path d="M5 22h14c1.103 0 2-.897 2-2V6c0-1.103-.897-2-2-2h-2V2h-2v2H9V2H7v2H5c-1.103 0-2 .897-2 2v14c0 1.103.897 2 2 2zM19 8l.001 12H5V8h14z"></path>
       </svg>
       {modDatetime ? (
-        <span className={`italic ${size === 'sm' ? 'text-sm' : 'text-base'}`}>
+        <span className={cn('italic', size === 'sm' ? 'text-sm' : 'text-base')}>
           Updated:
         </span>
       ) : (
         <span className="sr-only">Published:</span>
       )}
-      <span className={`italic ${size === 'sm' ? 'text-sm' : 'text-base'}`}>
+      <span className={cn('italic', size === 'sm' ? 'text-sm' : 'text-base')}>
         <FormattedDatetime
           pubDatetime={pubDatetime}
           modDatetime={modDatetime}

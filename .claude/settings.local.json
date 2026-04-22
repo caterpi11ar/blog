@@ -35,7 +35,9 @@
       "Bash(npm view:*)",
       "Bash(pnpm build:*)",
       "Bash(pnpm lint:fix)",
-      "Bash(timeout 15 pnpm dev)"
+      "Bash(timeout 15 pnpm dev)",
+      "Read(//Users/qin.dai/caterpi11ar/**)",
+      "Read(//Users/qin.dai/**)"
     ],
     "deny": [],
     "ask": []

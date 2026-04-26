@@ -37,7 +37,8 @@
       "Bash(pnpm lint:fix)",
       "Bash(timeout 15 pnpm dev)",
       "Read(//Users/qin.dai/caterpi11ar/**)",
-      "Read(//Users/qin.dai/**)"
+      "Read(//Users/qin.dai/**)",
+      "Bash(grep -n '```\\\\|`[^`]' /Users/qin.dai/caterpi11ar/blog/src/content/blog/permission-models.md)"
     ],
     "deny": [],
     "ask": []

@@ -8,6 +8,7 @@ import remarkCollapse from 'remark-collapse'
 import remarkMath from 'remark-math'
 import remarkToc from 'remark-toc'
 import { SITE } from './src/config'
+import remarkRewriteAssetUrls from './src/plugins/remark-rewrite-asset-urls'
 
 // https://astro.build/config
 export default defineConfig({
@@ -20,6 +21,13 @@ export default defineConfig({
   markdown: {
     rehypePlugins: [rehypeMathjax],
     remarkPlugins: [
+      [
+        remarkRewriteAssetUrls,
+        {
+          base: '/assets/threejs/',
+          target: 'https://caterpi11ar.tos-s3-cn-beijing.volces.com/blog/threejs/',
+        },
+      ],
       remarkToc,
       remarkMath,
       [

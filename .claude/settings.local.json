@@ -43,7 +43,13 @@
       "Bash(ssh -T git@github.com)",
       "Bash(ssh -T -p 443 git@ssh.github.com)",
       "Bash(ssh-keyscan -p 443 ssh.github.com)",
-      "Bash(awk '{print substr\\($1,1,1\\)}')"
+      "Bash(awk '{print substr\\($1,1,1\\)}')",
+      "Bash(rclone lsd *)",
+      "Bash(rclone lsjson *)",
+      "Bash(echo \"exit: $?\")",
+      "Bash(rclone copy *)",
+      "Bash(tee /tmp/rclone_upload.log)",
+      "Bash(rclone size *)"
     ],
     "deny": [],
     "ask": []

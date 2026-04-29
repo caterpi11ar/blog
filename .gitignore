@@ -24,3 +24,6 @@ pnpm-debug.log*
 .astro/*
 
 .astro/
+
+# threejs 专栏图片走 TOS，不入库
+public/assets/threejs/

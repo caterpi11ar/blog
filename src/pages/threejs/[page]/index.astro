@@ -1,0 +1,59 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import { SITE } from '@config'
+import Posts from '@layouts/Posts.astro'
+import getPageNumbers from '@utils/getPageNumbers'
+import { getCollection } from 'astro:content'
+
+function getThreejsOrder(post: CollectionEntry<'blog'>) {
+  const matched = post.data.title.match(/^(\d+)\./)
+  return matched ? Number(matched[1]) : Number.MAX_SAFE_INTEGER
+}
+
+function sortThreejsPosts(posts: CollectionEntry<'blog'>[]) {
+  return posts.sort((a, b) => getThreejsOrder(a) - getThreejsOrder(b))
+}
+
+export async function getStaticPaths() {
+  const posts = await getCollection(
+    'blog',
+    post => post.id.startsWith('threejs/') && !post.data.draft,
+  )
+
+  return getPageNumbers(posts.length)
+    .filter(pageNum => pageNum > 1)
+    .map(pageNum => ({
+      params: { page: String(pageNum) },
+    }))
+}
+
+const { page } = Astro.params
+
+const posts = await getCollection(
+  'blog',
+  post => post.id.startsWith('threejs/') && !post.data.draft,
+)
+
+const sortedPosts = sortThreejsPosts(posts)
+
+const totalPages = getPageNumbers(sortedPosts.length)
+
+const currentPage
+  = page && !Number.isNaN(Number(page)) && totalPages.includes(Number(page))
+    ? Number(page)
+    : 0
+const lastPost = currentPage * SITE.postPerPage
+const startPost = lastPost - SITE.postPerPage
+
+const paginatedPosts = sortedPosts.slice(startPost, lastPost);
+---
+
+<Posts
+  posts={paginatedPosts}
+  pageNum={currentPage}
+  totalPages={totalPages.length}
+  pageTitle="Three.js"
+  pageDesc="Three.js tutorials and practice notes."
+  activeNav="threejs"
+  basePath="/threejs"
+/>

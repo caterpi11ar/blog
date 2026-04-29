@@ -14,17 +14,29 @@ export interface Props {
   pageNum: number
   totalPages: number
   posts: CollectionEntry<'blog'>[]
+  pageTitle?: string
+  pageDesc?: string
+  activeNav?: 'posts' | 'threejs'
+  basePath?: string
 }
 
-const { pageNum, totalPages, posts } = Astro.props
+const {
+  pageNum,
+  totalPages,
+  posts,
+  pageTitle = 'Posts',
+  pageDesc = 'All the articles I\'ve posted.',
+  activeNav = 'posts',
+  basePath = '/posts',
+} = Astro.props
 
 const prev = pageNum > 1 ? '' : 'disabled'
 const next = pageNum < totalPages ? '' : 'disabled';
 ---
 
-<Layout title={`Posts | ${SITE.title}`}>
-  <Header activeNav="posts" />
-  <Main pageTitle="Posts" pageDesc="All the articles I've posted.">
+<Layout title={`${pageTitle} | ${SITE.title}`}>
+  <Header activeNav={activeNav} />
+  <Main pageTitle={pageTitle} pageDesc={pageDesc}>
     <ul>
       {
         posts.map(({ data }) => (
@@ -39,7 +51,7 @@ const next = pageNum < totalPages ? '' : 'disabled';
       <nav class="mb-8 mt-auto flex justify-center" aria-label="Pagination">
         <LinkButton
           disabled={prev === 'disabled'}
-          href={`/posts${pageNum - 1 !== 1 ? `/${pageNum - 1}` : ''}`}
+          href={`${basePath}${pageNum - 1 !== 1 ? `/${pageNum - 1}` : ''}`}
           className={cn('mr-4 select-none', prev === 'disabled' && 'pointer-events-none opacity-50 hover:text-skin-text group-hover:fill-skin-text')}
           ariaLabel="Previous"
         >
@@ -50,7 +62,7 @@ const next = pageNum < totalPages ? '' : 'disabled';
         </LinkButton>
         <LinkButton
           disabled={next === 'disabled'}
-          href={`/posts/${pageNum + 1}`}
+          href={`${basePath}/${pageNum + 1}`}
           className={cn('ml-4 select-none', next === 'disabled' && 'pointer-events-none opacity-50 hover:text-skin-text group-hover:fill-skin-text')}
           ariaLabel="Next"
         >

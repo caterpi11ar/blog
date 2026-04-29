@@ -1,27 +1,34 @@
 import type { CollectionEntry } from 'astro:content'
 import type { SatoriOptions } from 'satori'
 import { Resvg } from '@resvg/resvg-js'
+import { readFile } from 'node:fs/promises'
+import path from 'node:path'
 import satori from 'satori'
 import postOgImage from './og-templates/post'
 import siteOgImage from './og-templates/site'
 
-async function fetchFonts() {
-  // Regular Font
-  const fontFileRegular = await fetch(
-    'https://www.1001fonts.com/download/font/ibm-plex-mono.regular.ttf',
-  )
-  const fontRegular: ArrayBuffer = await fontFileRegular.arrayBuffer()
+function toArrayBuffer(buffer: Buffer) {
+  const arrayBuffer = new ArrayBuffer(buffer.byteLength)
+  new Uint8Array(arrayBuffer).set(buffer)
+  return arrayBuffer
+}
 
-  // Bold Font
-  const fontFileBold = await fetch(
-    'https://www.1001fonts.com/download/font/ibm-plex-mono.bold.ttf',
+async function loadFonts() {
+  const fontRegular = toArrayBuffer(
+    await readFile(
+      path.join(process.cwd(), 'node_modules/katex/dist/fonts/KaTeX_Main-Regular.ttf'),
+    ),
   )
-  const fontBold: ArrayBuffer = await fontFileBold.arrayBuffer()
+  const fontBold = toArrayBuffer(
+    await readFile(
+      path.join(process.cwd(), 'node_modules/katex/dist/fonts/KaTeX_Main-Bold.ttf'),
+    ),
+  )
 
   return { fontRegular, fontBold }
 }
 
-const { fontRegular, fontBold } = await fetchFonts()
+const { fontRegular, fontBold } = await loadFonts()
 
 const options: SatoriOptions = {
   width: 1200,
@@ -29,13 +36,13 @@ const options: SatoriOptions = {
   embedFont: true,
   fonts: [
     {
-      name: 'IBM Plex Mono',
+      name: 'KaTeX Main',
       data: fontRegular,
       weight: 400,
       style: 'normal',
     },
     {
-      name: 'IBM Plex Mono',
+      name: 'KaTeX Main',
       data: fontBold,
       weight: 600,
       style: 'normal',

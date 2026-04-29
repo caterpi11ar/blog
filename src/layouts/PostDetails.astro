@@ -6,14 +6,17 @@ import Giscus from '@components/Giscus'
 import Header from '@components/Header.astro'
 import Tag from '@components/Tag.astro'
 import Layout from '@layouts/Layout.astro'
+import { getPostHref } from '@utils/getAdjacentPosts'
 import { slugifyStr } from '@utils/slugify'
 import { render } from 'astro:content'
 
 export interface Props {
   post: CollectionEntry<'blog'>
+  prevPost?: CollectionEntry<'blog'>
+  nextPost?: CollectionEntry<'blog'>
 }
 
-const { post } = Astro.props
+const { post, prevPost, nextPost } = Astro.props
 
 const {
   title,
@@ -80,6 +83,31 @@ const layoutProps = {
     <ul class="my-8">
       {tags.map(tag => <Tag name={slugifyStr(tag)} />)}
     </ul>
+    {
+      (prevPost || nextPost) && (
+        <nav
+          aria-label="文章导航"
+          class="my-8 grid gap-3 border-y border-skin-line py-5 sm:grid-cols-2"
+        >
+          {
+            prevPost && (
+              <a class="focus-outline block rounded-md p-3 hover:bg-skin-card" href={getPostHref(prevPost)}>
+                <span class="block text-sm text-skin-base opacity-75">上一篇</span>
+                <span class="mt-1 block font-medium text-skin-accent">{prevPost.data.title}</span>
+              </a>
+            )
+          }
+          {
+            nextPost && (
+              <a class="focus-outline block rounded-md p-3 text-right hover:bg-skin-card sm:col-start-2" href={getPostHref(nextPost)}>
+                <span class="block text-sm text-skin-base opacity-75">下一篇</span>
+                <span class="mt-1 block font-medium text-skin-accent">{nextPost.data.title}</span>
+              </a>
+            )
+          }
+        </nav>
+      )
+    }
     <div class="flex justify-end">
       <button
         id="back-to-top"

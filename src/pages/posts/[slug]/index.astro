@@ -3,22 +3,34 @@ import type { CollectionEntry } from 'astro:content'
 import { SITE } from '@config'
 import PostDetails from '@layouts/PostDetails.astro'
 import Posts from '@layouts/Posts.astro'
+import { getAdjacentPosts } from '@utils/getAdjacentPosts'
 import getPageNumbers from '@utils/getPageNumbers'
 import getSortedPosts from '@utils/getSortedPosts'
 import slugify from '@utils/slugify'
 import { getCollection } from 'astro:content'
 
 export interface Props {
-  post: CollectionEntry<'blog'>
+  post?: CollectionEntry<'blog'>
+  prevPost?: CollectionEntry<'blog'>
+  nextPost?: CollectionEntry<'blog'>
 }
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog', ({ data }) => !data.draft)
+  const adjacentPosts = getAdjacentPosts(posts)
 
-  const postResult = posts.map(post => ({
-    params: { slug: slugify(post.data) },
-    props: { post },
-  }))
+  const postResult = posts.map((post) => {
+    const adjacent = adjacentPosts.get(post.id)
+
+    return {
+      params: { slug: slugify(post.data) },
+      props: {
+        post,
+        prevPost: adjacent?.prevPost,
+        nextPost: adjacent?.nextPost,
+      },
+    }
+  })
 
   const pagePaths = getPageNumbers(posts.length).map(pageNum => ({
     params: { slug: String(pageNum) },
@@ -28,7 +40,7 @@ export async function getStaticPaths() {
 }
 
 const { slug } = Astro.params
-const { post } = Astro.props
+const { post, prevPost, nextPost } = Astro.props
 
 const posts = await getCollection('blog')
 
@@ -48,7 +60,7 @@ const paginatedPosts = sortedPosts.slice(startPost, lastPost);
 
 {
   post ? (
-    <PostDetails post={post} />
+    <PostDetails post={post} prevPost={prevPost} nextPost={nextPost} />
   ) : (
     <Posts
       posts={paginatedPosts}

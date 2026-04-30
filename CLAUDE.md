@@ -4,74 +4,63 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a personal technical blog built with Astro 3.6.4, featuring a modern, responsive design with TypeScript and React components. The blog supports MDX content, math formulas, dark/light themes, and includes a Giscus comment system based on GitHub Discussions.
+Personal technical blog built with **Astro 6** + **React 18** + **Tailwind CSS 4**, written primarily in Chinese. Content is MDX/Markdown under `src/content/blog/`, with Giscus comments, client-side Fuse.js search, MathJax formulas, and Satori-generated OG images.
 
 ## Development Commands
 
-- `pnpm dev` or `pnpm start` - Start development server
-- `pnpm build` - Build for production
-- `pnpm preview` - Preview production build
-- `pnpm typecheck` - Run TypeScript type checking
-- `pnpm lint:fix` - Run ESLint with auto-fix
-- `pnpm cz` - Use Commitizen for conventional commits
+- `pnpm dev` — start dev server
+- `pnpm build` — production build
+- `pnpm preview` — preview production build
+- `pnpm sync` — regenerate Astro content types (run after editing `content.config.ts` or adding frontmatter fields)
+- `pnpm typecheck` — `tsc --noEmit`
+- `pnpm lint:fix` — ESLint auto-fix (uses `@antfu/eslint-config`)
+- `pnpm cz` — Commitizen conventional commit
 
-## Pre-commit Hooks
-
-The project uses simple-git-hooks with the following workflow:
-1. `pnpm i --frozen-lockfile --ignore-scripts --offline` - Install dependencies
-2. `pnpm typecheck` - Type checking
-3. `npx lint-staged` - Lint staged files
-
-Always ensure TypeScript compilation passes and linting is clean before committing.
+The pre-commit hook (simple-git-hooks) runs `pnpm typecheck` then lint-staged. Both must pass.
 
 ## Architecture
 
-### Core Structure
-- **Content Management**: Blog posts in `src/content/blog/` using MDX/Markdown
-- **Components**: React components in `src/components/` for UI elements
-- **Layouts**: Astro layouts in `src/layouts/` for page structure
-- **Pages**: Astro pages in `src/pages/` with dynamic routing
-- **Configuration**: Site config in `src/config.ts`
+### Content pipeline
 
-### Key Features
-- **Math Support**: MathJax integration via rehype-mathjax and remark-math
-- **Search**: Client-side search using Fuse.js
-- **Comments**: Giscus integration (requires GitHub Discussions setup)
-- **SEO**: Automatic sitemap, RSS feed, and Open Graph image generation
-- **Styling**: Tailwind CSS with custom base styles disabled
+- Posts live in `src/content/blog/` as `.md`/`.mdx`. The collection is declared in `src/content.config.ts` using the `glob` loader with a strict Zod schema: `pubDatetime` (required Date), `title`, `description`, optional `tags`, `featured`, `draft`, `ogImage` (image must be ≥1200×630 if a local asset).
+- Changing the schema requires `pnpm sync` so `astro:content` types regenerate.
+- Site-level config (author, title, URLs, pagination) lives in `src/config.ts`; import via the `@config` alias.
 
-### Important Files
-- `astro.config.ts` - Astro configuration with integrations and markdown plugins
-- `src/config.ts` - Site configuration including SITE, LOCALE, and SOCIALS
-- `src/types.ts` - TypeScript type definitions
-- `tailwind.config.cjs` - Tailwind CSS configuration
+### Markdown processing (`astro.config.ts`)
 
-## TypeScript Standards
+Remark/rehype chain (order matters):
+1. **`src/plugins/remark-rewrite-asset-urls.ts`** — rewrites `/assets/threejs/...` image paths to the Volces TOS CDN at build time. Three.js post images are intentionally **not committed** to git; they're served from TOS. Adding a new CDN-backed category means extending this plugin or config.
+2. `remark-toc` — generates TOC.
+3. `remark-math` + `rehype-mathjax` — LaTeX rendering.
+4. `remark-collapse` — wraps the "Table of contents" heading in a `<details>`.
 
-- Use interfaces for object structures, avoid type aliases for objects
-- Avoid `any`, prefer `unknown` when type is uncertain
-- Export all public interfaces and types
-- Use `as const` for literal types and constants
-- Provide JSDoc comments for complex types and functions
-- Ensure zero TypeScript errors or warnings
+Shiki uses the `one-dark-pro` theme with `wrap: true`.
 
-## Development Guidelines
+### Pages and routing
 
-- Avoid introducing new dependencies without careful consideration of bundle size
-- Use React.memo, useMemo, and useCallback for performance optimization
-- Maintain compatibility with modern browsers
-- Support server-side rendering
-- Avoid breaking changes to maintain backward compatibility
-- Use TypeScript and React for all new components
+- `src/pages/posts/[...slug].astro` + `[...page].astro` — dynamic post + paginated index.
+- `src/pages/tags/` — tag index and per-tag paginated lists.
+- `src/pages/threejs/` — dedicated Three.js landing.
+- `src/pages/og.png.ts` + `src/utils/generateOgImages.tsx` + `src/utils/og-templates/` — runtime OG image generation via Satori + resvg-js. `@resvg/resvg-js` is excluded from Vite `optimizeDeps` (native binding).
+- `src/pages/rss.xml.ts`, `robots.txt.ts` — feed and robots.
 
-## Content Structure
+### Utilities (`src/utils/`)
 
-Blog posts are organized in `src/content/blog/` with subdirectories for different categories:
-- `interview/` - Interview preparation content
-- `project/` - Project documentation
-- `python/` - Python tutorials
-- `react/` - React-related content
+`getSortedPosts`, `getPostsByTag`, `getUniqueTags`, `getAdjacentPosts`, `getPageNumbers`, `slugify`, `cn` (clsx + tailwind-merge). Prefer these over reimplementing; post ordering and draft filtering are centralized in `getSortedPosts`.
 
-## Package Manager
+### Layouts
 
-This project uses **pnpm** exclusively. The preinstall script enforces this with `npx -y only-allow pnpm`.
+`Layout.astro` (root) → `Main.astro` (header/footer shell) → `Posts.astro` / `PostDetails.astro` / `AboutLayout.astro`. React components under `src/components/` are used selectively (Giscus, Search, theme toggle) — most rendering is Astro.
+
+## Conventions
+
+- **Package manager**: pnpm only (preinstall enforces `only-allow pnpm`).
+- **Imports**: use the `@config` alias for site config; other paths are relative.
+- **TypeScript**: no `any`; prefer `interface` for object shapes; fail type-check is a blocker (pre-commit gate).
+- **Blog content language**: posts are in Chinese. Keep tone plain and natural — avoid dramatized or marketing-style phrasing.
+- **Three.js post images**: place under `/assets/threejs/...` in markdown; upload the actual image to the Volces TOS bucket (`blog/threejs/` prefix). Do not commit image binaries.
+- **Giscus**: requires `PUBLIC_GISCUS_REPO`, `PUBLIC_GISCUS_REPO_ID`, `PUBLIC_GISCUS_CATEGORY_ID` in `.env` (see README).
+
+## Content categories
+
+Subdirectories under `src/content/blog/` group posts by topic (ai, cycling, interview, linux, monorepo, project, python, react, ruankao, seo, threejs, travel, etc.). New categories can be added freely — the glob loader picks up any `**/*.{md,mdx}`.

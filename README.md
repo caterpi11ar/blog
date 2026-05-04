@@ -1,5 +1,14 @@
 # blog
 
+[![GitHub Stars](https://img.shields.io/github/stars/caterpi11ar/blog?style=flat&logo=github)](https://github.com/caterpi11ar/blog/stargazers)
+[![GitHub last commit](https://img.shields.io/github/last-commit/caterpi11ar/blog?logo=github)](https://github.com/caterpi11ar/blog/commits/main)
+[![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](#许可证)
+[![Astro](https://img.shields.io/badge/Astro-6-BC52EE?logo=astro&logoColor=fff)](https://astro.build/)
+[![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=000)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?logo=typescript&logoColor=fff)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?logo=tailwindcss&logoColor=fff)](https://tailwindcss.com/)
+[![pnpm](https://img.shields.io/badge/pnpm-required-F69220?logo=pnpm&logoColor=fff)](https://pnpm.io/)
+
 caterpi11ar 的个人技术博客，基于 [Astro](https://astro.build) 6、React 18 和 Tailwind CSS 4 构建。内容以中文 Markdown / MDX 为主，支持 Giscus 评论、客户端搜索、数学公式、自动目录、RSS、站点地图和 OG 图片生成。
 
 ## 特性

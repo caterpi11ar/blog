@@ -1,6 +1,15 @@
 {
   "name": "blog",
   "version": "3.0.0",
+  "license": "MIT",
+  "homepage": "https://caterpi11ar.com",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/caterpi11ar/blog.git"
+  },
+  "bugs": {
+    "url": "https://github.com/caterpi11ar/blog/issues"
+  },
   "scripts": {
     "preinstall": "npx -y only-allow pnpm",
     "dev": "astro dev",

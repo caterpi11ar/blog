@@ -1,0 +1,37 @@
+---
+import type { Column } from '@utils/columns'
+import { SITE } from '@config'
+import Posts from '@layouts/Posts.astro'
+import { getColumnPosts, getColumns } from '@utils/columns'
+import getPageNumbers from '@utils/getPageNumbers'
+import { getCollection } from 'astro:content'
+
+export interface Props {
+  column: Column
+}
+
+export async function getStaticPaths() {
+  const posts = await getCollection('columns')
+
+  return getColumns(posts).map(column => ({
+    params: { column: column.slug },
+    props: { column },
+  }))
+}
+
+const { column } = Astro.props
+const posts = await getCollection('columns')
+const sortedPosts = getColumnPosts(posts, column.slug)
+const totalPages = getPageNumbers(sortedPosts.length)
+const paginatedPosts = sortedPosts.slice(0, SITE.postPerPage);
+---
+
+<Posts
+  posts={paginatedPosts}
+  pageNum={1}
+  totalPages={totalPages.length}
+  pageTitle={column.title}
+  pageDesc={`${column.title} column articles.`}
+  activeNav={column.slug}
+  basePath={`/${column.slug}`}
+/>

@@ -5,16 +5,19 @@ import SearchBar from '@components/Search'
 import { SITE } from '@config'
 import Layout from '@layouts/Layout.astro'
 import Main from '@layouts/Main.astro'
+import { getPostHref } from '@utils/getAdjacentPosts'
 import { getCollection } from 'astro:content'
 
 // Retrieve all articles
 const posts = await getCollection('blog', ({ data }) => !data.draft)
+const columnPosts = await getCollection('columns', ({ data }) => !data.draft)
 
 // List of items to search in
-const searchList = posts.map(({ data }) => ({
-  title: data.title,
-  description: data.description,
-  data,
+const searchList = [...posts, ...columnPosts].map(post => ({
+  title: post.data.title,
+  description: post.data.description,
+  data: post.data,
+  href: getPostHref(post),
 }))
 ---
 

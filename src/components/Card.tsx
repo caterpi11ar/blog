@@ -1,10 +1,10 @@
-import type { CollectionEntry } from 'astro:content'
+import type { PostData } from '@utils/postTypes'
 import { slugifyStr } from '@utils/slugify'
 import Datetime from './Datetime'
 
 export interface Props {
   href?: string
-  frontmatter: CollectionEntry<'blog'>['data']
+  frontmatter: PostData
   secHeading?: boolean
 }
 

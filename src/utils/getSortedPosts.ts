@@ -1,6 +1,6 @@
-import type { CollectionEntry } from 'astro:content'
+import type { AnyPost } from './postTypes'
 
-function getSortedPosts(posts: CollectionEntry<'blog'>[]) {
+function getSortedPosts<TPost extends AnyPost>(posts: TPost[]) {
   return posts
     .filter(({ data }) => !data.draft)
     .sort(

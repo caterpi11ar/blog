@@ -1,5 +1,5 @@
 ---
-import type { CollectionEntry } from 'astro:content'
+import type { AnyPost } from '@utils/postTypes'
 import Datetime from '@components/Datetime'
 import Footer from '@components/Footer.astro'
 import Giscus from '@components/Giscus'
@@ -11,9 +11,9 @@ import { slugifyStr } from '@utils/slugify'
 import { render } from 'astro:content'
 
 export interface Props {
-  post: CollectionEntry<'blog'>
-  prevPost?: CollectionEntry<'blog'>
-  nextPost?: CollectionEntry<'blog'>
+  post: AnyPost
+  prevPost?: AnyPost
+  nextPost?: AnyPost
 }
 
 const { post, prevPost, nextPost } = Astro.props
@@ -32,8 +32,9 @@ const {
 const { Content } = await render(post)
 
 const ogImageUrl = typeof ogImage === 'string' ? ogImage : ogImage?.src
+const defaultOgPath = `${getPostHref(post)}.png`
 const ogUrl = new URL(
-  ogImageUrl ?? `/posts/${slugifyStr(title)}.png`,
+  ogImageUrl ?? defaultOgPath,
   Astro.url.origin,
 ).href
 

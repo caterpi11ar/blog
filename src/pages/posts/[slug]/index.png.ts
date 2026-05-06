@@ -1,5 +1,5 @@
+import type { AnyPost } from '@utils/postTypes'
 import type { APIRoute } from 'astro'
-import type { CollectionEntry } from 'astro:content'
 import { generateOgImageForPost } from '@utils/generateOgImages'
 import { slugifyStr } from '@utils/slugify'
 import { getCollection } from 'astro:content'
@@ -18,6 +18,6 @@ export async function getStaticPaths() {
 export const GET: APIRoute = async ({ props }) =>
   // eslint-disable-next-line ts/ban-ts-comment
   // @ts-ignore
-  new Response(await generateOgImageForPost(props as CollectionEntry<'blog'>), {
+  new Response(await generateOgImageForPost(props as AnyPost), {
     headers: { 'Content-Type': 'image/png' },
   })

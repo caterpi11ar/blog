@@ -1,14 +1,17 @@
 ---
 import { LOGO_IMAGE, SITE } from '@config'
 import { cn } from '@utils/cn'
+import { getColumns } from '@utils/columns'
+import { getCollection } from 'astro:content'
 import Hr from './Hr.astro'
 import LinkButton from './LinkButton.astro'
 
 export interface Props {
-  activeNav?: 'posts' | 'threejs' | 'tags' | 'about' | 'search'
+  activeNav?: string
 }
 
 const { activeNav } = Astro.props
+const columns = getColumns(await getCollection('columns'))
 ---
 
 <header class="fixed top-0 left-0 right-0 z-40 bg-skin-surface/80 backdrop-blur-sm">
@@ -60,11 +63,15 @@ const { activeNav } = Astro.props
               Posts
             </a>
           </li>
-          <li class="col-span-2 flex items-center justify-center">
-            <a href="/threejs" class={cn('w-full px-4 py-3 text-center font-medium hover:text-skin-accent sm:my-0 sm:px-2 sm:py-1', activeNav === 'threejs' && 'active underline decoration-wavy decoration-2 underline-offset-4')}>
-              Three.js
-            </a>
-          </li>
+          {
+            columns.map(column => (
+              <li class="col-span-2 flex items-center justify-center">
+                <a href={`/${column.slug}`} class={cn('w-full px-4 py-3 text-center font-medium hover:text-skin-accent sm:my-0 sm:px-2 sm:py-1', activeNav === column.slug && 'active underline decoration-wavy decoration-2 underline-offset-4')}>
+                  {column.title}
+                </a>
+              </li>
+            ))
+          }
           <li class="col-span-2 flex items-center justify-center">
             <a href="/tags" class={cn('w-full px-4 py-3 text-center font-medium hover:text-skin-accent sm:my-0 sm:px-2 sm:py-1', activeNav === 'tags' && 'active underline decoration-wavy decoration-2 underline-offset-4')}>
               Tags

@@ -1,7 +1,7 @@
-import type { CollectionEntry } from 'astro:content'
+import type { AnyPost } from './postTypes'
 import { slugifyStr } from './slugify'
 
-function getUniqueTags(posts: CollectionEntry<'blog'>[]) {
+function getUniqueTags<TPost extends AnyPost>(posts: TPost[]) {
   const filteredPosts = posts.filter(({ data }) => !data.draft)
   const tags: string[] = filteredPosts
     .flatMap(post => post.data.tags)

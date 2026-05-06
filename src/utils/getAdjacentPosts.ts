@@ -1,16 +1,21 @@
-import type { CollectionEntry } from 'astro:content'
+import type { AnyPost, ColumnPost } from './postTypes'
+import { getColumnSlug } from '@utils/columns'
 import slugify from '@utils/slugify'
 
-type BlogPost = CollectionEntry<'blog'>
-
 export interface AdjacentPosts {
-  prevPost?: BlogPost
-  nextPost?: BlogPost
+  prevPost?: AnyPost
+  nextPost?: AnyPost
 }
 
-function getPostDirectory(post: BlogPost) {
+function getPostKey(post: AnyPost) {
+  return `${post.collection}/${post.id}`
+}
+
+function getPostDirectory(post: AnyPost) {
   const index = post.id.lastIndexOf('/')
-  return index === -1 ? '' : post.id.slice(0, index)
+  const directory = index === -1 ? '' : post.id.slice(0, index)
+
+  return `${post.collection}/${directory}`
 }
 
 function getBasename(value: string) {
@@ -20,7 +25,7 @@ function getBasename(value: string) {
   return filename.replace(/\.(mdx?|astro)$/i, '')
 }
 
-function getNumericPrefix(post: BlogPost) {
+function getNumericPrefix(post: AnyPost) {
   const filePrefix = getBasename(post.filePath ?? post.id).match(/^(\d+)(?:\.|\s|$)/)
   if (filePrefix) {
     return Number(filePrefix[1])
@@ -30,7 +35,7 @@ function getNumericPrefix(post: BlogPost) {
   return titlePrefix ? Number(titlePrefix[1]) : undefined
 }
 
-function compareByDateAndTitle(a: BlogPost, b: BlogPost) {
+function compareByDateAndTitle(a: AnyPost, b: AnyPost) {
   const dateA = new Date(a.data.pubDatetime).getTime()
   const dateB = new Date(b.data.pubDatetime).getTime()
 
@@ -41,7 +46,7 @@ function compareByDateAndTitle(a: BlogPost, b: BlogPost) {
   return a.data.title.localeCompare(b.data.title, 'zh-CN')
 }
 
-function comparePostsInSeries(a: BlogPost, b: BlogPost) {
+function comparePostsInSeries(a: AnyPost, b: AnyPost) {
   const numberA = getNumericPrefix(a)
   const numberB = getNumericPrefix(b)
 
@@ -60,8 +65,8 @@ function comparePostsInSeries(a: BlogPost, b: BlogPost) {
   return compareByDateAndTitle(a, b)
 }
 
-export function getAdjacentPosts(posts: BlogPost[]) {
-  const groups = new Map<string, BlogPost[]>()
+export function getAdjacentPosts(posts: AnyPost[]) {
+  const groups = new Map<string, AnyPost[]>()
 
   posts.forEach((post) => {
     const directory = getPostDirectory(post)
@@ -77,7 +82,7 @@ export function getAdjacentPosts(posts: BlogPost[]) {
     const sortedGroup = [...group].sort(comparePostsInSeries)
 
     sortedGroup.forEach((post, index) => {
-      adjacentPosts.set(post.id, {
+      adjacentPosts.set(getPostKey(post), {
         prevPost: sortedGroup[index - 1],
         nextPost: sortedGroup[index + 1],
       })
@@ -87,6 +92,13 @@ export function getAdjacentPosts(posts: BlogPost[]) {
   return adjacentPosts
 }
 
-export function getPostHref(post: BlogPost) {
+export function getAdjacentPost(post: AnyPost, adjacentPosts: Map<string, AdjacentPosts>) {
+  return adjacentPosts.get(getPostKey(post))
+}
+
+export function getPostHref(post: AnyPost) {
+  if (post.collection === 'columns') {
+    return `/${getColumnSlug(post as ColumnPost)}/${slugify(post.data)}`
+  }
   return `/posts/${slugify(post.data)}`
 }

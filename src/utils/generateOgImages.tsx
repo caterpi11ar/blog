@@ -1,8 +1,10 @@
-import type { CollectionEntry } from 'astro:content'
+import type { Buffer } from 'node:buffer'
 import type { SatoriOptions } from 'satori'
-import { Resvg } from '@resvg/resvg-js'
+import type { AnyPost } from './postTypes'
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
+import process from 'node:process'
+import { Resvg } from '@resvg/resvg-js'
 import satori from 'satori'
 import postOgImage from './og-templates/post'
 import siteOgImage from './og-templates/site'
@@ -56,7 +58,7 @@ function svgBufferToPngBuffer(svg: string) {
   return pngData.asPng()
 }
 
-export async function generateOgImageForPost(post: CollectionEntry<'blog'>) {
+export async function generateOgImageForPost(post: AnyPost) {
   const svg = await satori(postOgImage(post), options)
   return svgBufferToPngBuffer(svg)
 }

@@ -1,9 +1,9 @@
-import type { CollectionEntry } from 'astro:content'
+import type { PostData } from './postTypes'
 import { slug as slugger } from 'github-slugger'
 
 export const slugifyStr = (str: string) => slugger(str)
 
-function slugify(post: CollectionEntry<'blog'>['data']) {
+function slugify(post: PostData) {
   return post.postSlug ? slugger(post.postSlug) : slugger(post.title)
 }
 

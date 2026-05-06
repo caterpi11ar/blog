@@ -1,5 +1,5 @@
 ---
-import type { CollectionEntry } from 'astro:content'
+import type { AnyPost } from '@utils/postTypes'
 import Card from '@components/Card'
 import Footer from '@components/Footer.astro'
 import Header from '@components/Header.astro'
@@ -8,15 +8,15 @@ import { SITE } from '@config'
 import Layout from '@layouts/Layout.astro'
 import Main from '@layouts/Main.astro'
 import { cn } from '@utils/cn'
-import slugify from '@utils/slugify'
+import { getPostHref } from '@utils/getAdjacentPosts'
 
 export interface Props {
   pageNum: number
   totalPages: number
-  posts: CollectionEntry<'blog'>[]
+  posts: AnyPost[]
   pageTitle?: string
   pageDesc?: string
-  activeNav?: 'posts' | 'threejs'
+  activeNav?: string
   basePath?: string
 }
 
@@ -39,8 +39,8 @@ const next = pageNum < totalPages ? '' : 'disabled';
   <Main pageTitle={pageTitle} pageDesc={pageDesc}>
     <ul>
       {
-        posts.map(({ data }) => (
-          <Card href={`/posts/${slugify(data)}`} frontmatter={data} />
+        posts.map(post => (
+          <Card href={getPostHref(post)} frontmatter={post.data} />
         ))
       }
     </ul>

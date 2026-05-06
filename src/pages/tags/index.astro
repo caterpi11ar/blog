@@ -9,8 +9,9 @@ import getUniqueTags from '@utils/getUniqueTags'
 import { getCollection } from 'astro:content'
 
 const posts = await getCollection('blog')
+const columnPosts = await getCollection('columns')
 
-const tags = getUniqueTags(posts)
+const tags = getUniqueTags([...posts, ...columnPosts])
 ---
 
 <Layout title={`Tags | ${SITE.title}`}>

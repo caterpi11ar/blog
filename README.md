@@ -16,8 +16,8 @@ caterpi11ar 的个人技术博客，基于 [Astro](https://astro.build) 6、Reac
 ## 特性
 
 - Astro 静态站点生成，页面轻量、构建结果可直接部署
-- Markdown / MDX 内容管理，文章位于 `src/content/blog/`
-- 独立 Three.js 专栏，普通首页和 `/posts` 列表不会展示 Three.js 文章
+- Markdown / MDX 内容管理，普通文章位于 `src/content/blog/`
+- 专栏文章独立位于 `src/content/columns/`，自动生成专栏列表页
 - `/assets/threejs/...` 图片在构建时改写到火山引擎 TOS CDN
 - Fuse.js 客户端搜索
 - Giscus GitHub Discussions 评论
@@ -62,7 +62,7 @@ pnpm cz         # Commitizen 提交
 
 ## 内容结构
 
-文章放在 `src/content/blog/` 下，子目录按主题归类，例如：
+普通文章放在 `src/content/blog/` 下，子目录按主题归类，例如：
 
 ```text
 src/content/blog/
@@ -70,15 +70,24 @@ src/content/blog/
   project/
   react/
   seo/
-  threejs/
 ```
 
-普通文章会出现在首页、`/posts` 和标签页中。`src/content/blog/threejs/` 下的文章属于独立 Three.js 专栏：
+专栏文章放在 `src/content/columns/` 下，每个一级目录对应一个专栏：
 
-- 专栏入口：`/threejs`
-- 专栏分页：`/threejs/2`、`/threejs/3` ...
-- 文章详情仍使用 `/posts/{slug}` 路径
-- 首页和普通 `/posts` 列表会通过 `src/utils/postFilters.ts` 排除 Three.js 文章
+```text
+src/content/columns/
+  threejs/
+  webgl/
+```
+
+普通文章会出现在首页和 `/posts` 中。专栏目录会独立生成专栏列表页和文章详情：
+
+- `src/content/columns/threejs/` 会生成 `/threejs`
+- `src/content/columns/webgl/` 会生成 `/webgl`
+- 专栏分页：`/{column}/2`、`/{column}/3` ...
+- 专栏文章详情：`/{column}/{slug}`，例如 `/threejs/2-实战列表`
+- 普通文章详情：`/posts/{slug}`
+- 标签页、搜索和 RSS 会包含普通文章和专栏文章
 
 文章 frontmatter 由 `src/content.config.ts` 校验，常用字段包括：
 
@@ -126,13 +135,15 @@ remarkRewriteAssetUrls({
 
 - `/`：首页，展示 featured 和最近普通文章
 - `/posts`：普通文章列表
-- `/posts/{slug}`：文章详情
-- `/threejs`：Three.js 专栏列表
+- `/posts/{slug}`：普通文章详情
+- `/{column}`：专栏列表，例如 `/threejs`
+- `/{column}/{slug}`：专栏文章详情，例如 `/threejs/2-实战列表`
+- `/{column}/{page}`：专栏分页，例如 `/threejs/2`
 - `/tags`：标签列表
 - `/tags/{tag}`：标签文章列表
 - `/search`：客户端搜索
 - `/rss.xml`：RSS feed
-- `/og.png`、`/posts/{slug}/index.png`：OG 图片
+- `/og.png`、`/posts/{slug}/index.png`、`/{column}/{slug}/index.png`：OG 图片
 
 ## Giscus 评论配置
 

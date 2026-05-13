@@ -11,7 +11,7 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=fff)](https://tailwindcss.com/)
 [![pnpm](https://img.shields.io/badge/pnpm-required-F69220?style=flat-square&logo=pnpm&logoColor=fff)](https://pnpm.io/)
 
-caterpi11ar 的个人技术博客，基于 [Astro](https://astro.build) 6、React 18 和 Tailwind CSS 4 构建。内容以中文 Markdown / MDX 为主，支持 Giscus 评论、客户端搜索、数学公式、自动目录、RSS、站点地图和 OG 图片生成。
+个人技术博客，基于 [Astro](https://astro.build) 6、React 18 和 Tailwind CSS 4 构建。内容以中文 Markdown / MDX 为主，支持 Giscus 评论、客户端搜索、数学公式、自动目录、RSS、站点地图和 OG 图片生成。
 
 ## 特性
 

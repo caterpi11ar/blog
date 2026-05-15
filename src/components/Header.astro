@@ -12,6 +12,7 @@ export interface Props {
 
 const { activeNav } = Astro.props
 const columns = getColumns(await getCollection('columns'))
+const isColumnActive = columns.some(column => activeNav === column.slug)
 ---
 
 <header class="fixed top-0 left-0 right-0 z-40 bg-skin-surface/80 backdrop-blur-sm">
@@ -63,15 +64,33 @@ const columns = getColumns(await getCollection('columns'))
               Posts
             </a>
           </li>
-          {
-            columns.map(column => (
-              <li class="col-span-2 flex items-center justify-center">
-                <a href={`/${column.slug}`} class={cn('w-full px-4 py-3 text-center font-medium hover:text-skin-accent sm:my-0 sm:px-2 sm:py-1', activeNav === column.slug && 'active underline decoration-wavy decoration-2 underline-offset-4')}>
-                  {column.title}
-                </a>
-              </li>
-            ))
-          }
+          <li class="col-span-2 flex items-center justify-center sm:relative">
+            <details class="columns-menu w-full text-center" open={isColumnActive}>
+              <summary class={cn('columns-summary flex w-full cursor-pointer list-none items-center justify-center gap-1 px-4 py-3 font-medium hover:text-skin-accent sm:my-0 sm:px-2 sm:py-1', isColumnActive && 'active underline decoration-wavy decoration-2 underline-offset-4')}>
+                Study
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  class="h-4 w-4 transition-transform columns-menu-arrow"
+                >
+                  <path d="M7.293 8.293 12 13l4.707-4.707 1.414 1.414L12 15.828 5.879 9.707z" />
+                </svg>
+              </summary>
+              <ul class="mt-1 grid w-full gap-1 rounded-md bg-skin-card/40 p-1 sm:absolute sm:left-1/2 sm:top-full sm:z-50 sm:min-w-40 sm:-translate-x-1/2 sm:bg-skin-surface sm:shadow-lg sm:ring-1 sm:ring-skin-line">
+                {
+                  columns.map(column => (
+                    <li class="flex items-center justify-center">
+                      <a href={`/${column.slug}`} class={cn('w-full rounded px-4 py-2 text-center font-medium hover:bg-skin-card hover:text-skin-accent sm:px-3 sm:py-2', activeNav === column.slug && 'text-skin-accent')}>
+                        {column.title}
+                      </a>
+                    </li>
+                  ))
+                }
+              </ul>
+            </details>
+          </li>
           <li class="col-span-2 flex items-center justify-center">
             <a href="/tags" class={cn('w-full px-4 py-3 text-center font-medium hover:text-skin-accent sm:my-0 sm:px-2 sm:py-1', activeNav === 'tags' && 'active underline decoration-wavy decoration-2 underline-offset-4')}>
               Tags
@@ -137,6 +156,12 @@ const columns = getColumns(await getCollection('columns'))
   }
   .menu-icon.is-active .close {
     opacity: 1;
+  }
+  .columns-summary::-webkit-details-marker {
+    display: none;
+  }
+  .columns-menu[open] .columns-menu-arrow {
+    transform: rotate(180deg);
   }
 </style>
 

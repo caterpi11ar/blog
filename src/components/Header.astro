@@ -64,6 +64,11 @@ const isColumnActive = columns.some(column => activeNav === column.slug)
               Posts
             </a>
           </li>
+          <li class="col-span-2 flex items-center justify-center">
+            <a href="/tags" class={cn('w-full px-4 py-3 text-center font-medium hover:text-skin-accent sm:my-0 sm:px-2 sm:py-1', activeNav === 'tags' && 'active underline decoration-wavy decoration-2 underline-offset-4')}>
+              Tags
+            </a>
+          </li>
           <li class="col-span-2 flex items-center justify-center sm:relative">
             <details class="columns-menu w-full text-center" open={isColumnActive}>
               <summary class={cn('columns-summary flex w-full cursor-pointer list-none items-center justify-center gap-1 px-4 py-3 font-medium hover:text-skin-accent sm:my-0 sm:px-2 sm:py-1', isColumnActive && 'active underline decoration-wavy decoration-2 underline-offset-4')}>
@@ -90,11 +95,6 @@ const isColumnActive = columns.some(column => activeNav === column.slug)
                 }
               </ul>
             </details>
-          </li>
-          <li class="col-span-2 flex items-center justify-center">
-            <a href="/tags" class={cn('w-full px-4 py-3 text-center font-medium hover:text-skin-accent sm:my-0 sm:px-2 sm:py-1', activeNav === 'tags' && 'active underline decoration-wavy decoration-2 underline-offset-4')}>
-              Tags
-            </a>
           </li>
           <li class="col-span-2 flex items-center justify-center">
             <a href="/about" class={cn('w-full px-4 py-3 text-center font-medium hover:text-skin-accent sm:my-0 sm:px-2 sm:py-1', activeNav === 'about' && 'active underline decoration-wavy decoration-2 underline-offset-4')}>
